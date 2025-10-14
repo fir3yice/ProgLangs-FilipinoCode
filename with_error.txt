@@ -1,0 +1,9 @@
+buhat main() {
+    lods bilang x etoNaLods 5    // missing semicolon
+    lods dobols y masGamay 3.14;  // wrong operator in declaration
+    sakalam (i masGamay 3; i etoNaLods i dagdag 1) {  // invalid initialization in for
+        yawit i;
+    // missing closing brace for loop
+    ediwow (x parehasLods 5 { yawit "X is 5"; } edi { yawit "X is not 5"; } // missing parentheses around condition
+    uwianNa 0
+}

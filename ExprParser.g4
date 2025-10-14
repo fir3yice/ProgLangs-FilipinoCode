@@ -10,6 +10,7 @@ program
 statement
     : vardecl
     | assignment
+    | incDecStmt        
     | printStmt
     | ifStmt
     | whileStmt
@@ -21,14 +22,29 @@ statement
     | CONTINUE SEMICOLON
     ;
 
-// Variable declaration
+// Variable declaration outside loops
 vardecl
     : VAR dataType IDENTIFIER (ASSIGN expression)? SEMICOLON
     ;
 
-// Assignment
+// Assignment statement (with semicolon)
 assignment
     : IDENTIFIER ASSIGN expression SEMICOLON
+    ;
+
+// Increment / Decrement statement (standalone)
+incDecStmt
+    : (IDENTIFIER INCREMENT | IDENTIFIER DECREMENT) SEMICOLON
+    ;
+
+// Assignment for 'for' headers (no semicolon)
+assignmentNoSemicolon
+    : IDENTIFIER ASSIGN expression
+    ;
+
+// Type-only variable declaration for 'for' header
+typedVarDecl
+    : dataType IDENTIFIER (ASSIGN expression)?
     ;
 
 // Print statement
@@ -36,7 +52,7 @@ printStmt
     : PRINT expression SEMICOLON
     ;
 
-// If-Else chain
+// If-ElseIf-Else chain
 ifStmt
     : IF LPAREN expression RPAREN block (ELSEIF LPAREN expression RPAREN block)* (ELSE block)?
     ;
@@ -48,7 +64,7 @@ whileStmt
 
 // For loop
 forStmt
-    : FOR LPAREN assignment expression SEMICOLON expression RPAREN block
+    : FOR LPAREN (vardecl | typedVarDecl | assignmentNoSemicolon)? SEMICOLON expression? SEMICOLON expression? RPAREN block
     ;
 
 // Function declaration
@@ -63,13 +79,16 @@ funcCall
 
 // === EXPRESSIONS ===
 expression
-    : expression (PLUS|MINUS) expression        # AddSubExpr
-    | expression (MULT|DIV|MODULO) expression   # MulDivExpr
+    : IDENTIFIER ASSIGN expression              # AssignExpr
+    | expression (PLUS|MINUS) expression       # AddSubExpr
+    | expression (MULT|DIV|MODULO) expression  # MulDivExpr
     | expression (EQ|NEQ|LT|LEQ|GT|GEQ) expression # CompareExpr
-    | expression (AND|OR) expression            # LogicExpr
+    | expression (AND|OR) expression           # LogicExpr
     | NOT expression                            # NotExpr
     | LPAREN expression RPAREN                  # ParenExpr
     | funcCall                                  # FuncCallExpr
+    | IDENTIFIER INCREMENT                       # PostIncrement
+    | IDENTIFIER DECREMENT                       # PostDecrement
     | literal                                   # LiteralExpr
     | IDENTIFIER                                # IdExpr
     ;
