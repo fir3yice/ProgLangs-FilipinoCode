@@ -44,6 +44,24 @@ class FilipinoCodeListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by FilipinoCodeParser#break_statement.
+    def enterBreak_statement(self, ctx:FilipinoCodeParser.Break_statementContext):
+        pass
+
+    # Exit a parse tree produced by FilipinoCodeParser#break_statement.
+    def exitBreak_statement(self, ctx:FilipinoCodeParser.Break_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by FilipinoCodeParser#continue_statement.
+    def enterContinue_statement(self, ctx:FilipinoCodeParser.Continue_statementContext):
+        pass
+
+    # Exit a parse tree produced by FilipinoCodeParser#continue_statement.
+    def exitContinue_statement(self, ctx:FilipinoCodeParser.Continue_statementContext):
+        pass
+
+
     # Enter a parse tree produced by FilipinoCodeParser#assignment_statement.
     def enterAssignment_statement(self, ctx:FilipinoCodeParser.Assignment_statementContext):
         pass

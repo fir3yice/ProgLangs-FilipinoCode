@@ -275,13 +275,43 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         
         # While true, execute the block
         while condition:
-            self.visit(ctx.block())
-            condition = self.visit(ctx.expression())  # Re-evaluate after each loop
+            try:
+                self.visit(ctx.block())
+                condition = self.visit(ctx.expression())  # Re-evaluate after each loop
+            except BreakSignal:
+                break
+            except ContinueSignal:
+                continue
         return None
         
+    # def visitFor_statement(self, ctx: FilipinoCodeParser.For_statementContext):
+    # # --- Initialization ---
+    #     if ctx.assignment_statement(0):  # first assignment before first semicolon
+    #         self.visit(ctx.assignment_statement(0))
+        
+    #     # --- Condition (optional) ---
+    #     condition = True
+    #     if ctx.expression():
+    #         condition = self.visit(ctx.expression())
+
+    #     # --- Loop ---
+    #     while condition:
+    #         self.visit(ctx.block())  # execute body
+            
+    #         # --- Update (optional second assignment) ---
+    #         if len(ctx.assignment_statement()) > 1:
+    #             self.visit(ctx.assignment_statement(1))
+            
+    #         # --- Re-evaluate condition ---
+    #         if ctx.expression():
+    #             condition = self.visit(ctx.expression())
+    #         else:
+    #             condition = True  # default true if no condition
+    #     return None
+
     def visitFor_statement(self, ctx: FilipinoCodeParser.For_statementContext):
-    # --- Initialization ---
-        if ctx.assignment_statement(0):  # first assignment before first semicolon
+        # --- Initialization (optional) ---
+        if ctx.assignment_statement(0):  
             self.visit(ctx.assignment_statement(0))
         
         # --- Condition (optional) ---
@@ -289,11 +319,17 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         if ctx.expression():
             condition = self.visit(ctx.expression())
 
-        # --- Loop ---
+        # --- Loop execution ---
         while condition:
-            self.visit(ctx.block())  # execute body
-            
-            # --- Update (optional second assignment) ---
+            try:
+                self.visit(ctx.block())  # execute body
+            except BreakSignal:
+                break
+            except ContinueSignal:
+                # skip to update phase without running rest of block
+                pass
+
+            # --- Update (optional) ---
             if len(ctx.assignment_statement()) > 1:
                 self.visit(ctx.assignment_statement(1))
             
@@ -301,10 +337,17 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             if ctx.expression():
                 condition = self.visit(ctx.expression())
             else:
-                condition = True  # default true if no condition
+                condition = True  # default: always true (infinite loop)
+        
         return None
 
-    
+
+    def visitBreak_statement(self, ctx):
+        raise BreakSignal()
+
+    def visitContinue_statement(self, ctx):
+        raise ContinueSignal()
+
 
     # --- Program entry ---
     def visitProgram(self, ctx: FilipinoCodeParser.ProgramContext):
@@ -312,3 +355,9 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         for child in ctx.getChildren():
             self.visit(child)
         return None
+    
+class BreakSignal(Exception):
+    pass
+
+class ContinueSignal(Exception):
+    pass

@@ -22,11 +22,19 @@ statement
     | for_statement
     | return_statement SEMICOLON
     | block
-    | BREAK SEMICOLON
-    | CONTINUE SEMICOLON
+    | break_statement
+    | continue_statement
     | print_statement SEMICOLON
     | input_statement SEMICOLON
     | vardecl_statement SEMICOLON
+    ;
+
+break_statement 
+    : BREAK SEMICOLON 
+    ;
+
+continue_statement 
+    : CONTINUE SEMICOLON 
     ;
 
 assignment_statement
@@ -142,7 +150,7 @@ block
     ;
 
 if_statement
-    : IF LPAREN expression RPAREN block (ELSE_IF LPAREN expression RPAREN block)* (ELSE block)?
+    : IF LPAREN expression RPAREN block (ELSE_IF LPAREN expression RPAREN block)* (ELSE block)? //edit to allow only 1 line?
     ;
 
 while_statement

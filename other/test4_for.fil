@@ -1,7 +1,18 @@
 buhat main() {
     lods bilang i;
-
+    yawit "basic test";
     sakalam (i etoNaLods 0; i saktoGamay 5; i etoNaLods i dagdag 1) {
+        yawit i;
+    }
+
+    yawit "advanced test";
+    sakalam (i etoNaLods 0; i saktoGamay 5; i etoNaLods i dagdag 1) {
+        ediwow ( i parehasLods 2){
+            padayon; //continue
+        }
+        ediwow ( i parehasLods 4){
+            charot; //break
+        }
         yawit i;
     }
 }

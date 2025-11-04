@@ -8,4 +8,18 @@ buhat main() {
     }
 
     yawit "Loop finished! x is now:", x;
+
+    x etoNaLods 0;
+
+    weh (x saktoGamay 5){
+        x etoNaLods x dagdag 1;
+        ediwow ( x parehasLods 2){
+            padayon; //continue
+        }
+        ediwow ( x parehasLods 4){
+            charot; //break
+        }
+        yawit x;
+    }
+    yawit "Loop finished! x is now:", x;
 }
