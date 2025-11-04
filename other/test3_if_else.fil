@@ -1,0 +1,18 @@
+buhat main() {
+    lods bilang score;
+    yawit "Enter your score:";
+    ngutana score;
+
+    ediwow (score dagdag 10 saktoDako 90) {
+        yawit "Excellent!";
+    } ediAno (score saktoDako 75) {
+        yawit "Good job!";
+    } ediAno (score saktoDako 55) {
+        yawit "Ok lang!";
+    }
+     edi {
+        yawit "Needs improvement!";
+    }
+
+    yawit score;
+}

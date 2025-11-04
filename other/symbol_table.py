@@ -7,6 +7,7 @@ class SymbolTable:
     def define(self, name, dtype, value, is_const=False):
         """Create or update a variable in the current scope."""
         self.symbols[name] = Symbol(name, dtype, value, is_const)
+        #TODO: CONSTANTS
 
     def assign(self, name, value):
         """Create or update a variable in the current scope."""

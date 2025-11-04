@@ -242,6 +242,32 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         # Store updated value
         symbol.value = value
         return None
+    
+
+    # --- If / Else / Else If ---
+    def visitIf_statement(self, ctx: FilipinoCodeParser.If_statementContext):
+        # 1️⃣ Main if
+        main_condition = self.visit(ctx.expression(0))
+        if main_condition:
+            self.visit(ctx.block(0))
+            return None  # Stop after first true branch
+
+        # 2️⃣ Else ifs (ediAno ...)
+        elif_count = len(ctx.ELSE_IF())
+        for i in range(elif_count):
+            cond_index = i + 1  # expression index after the main one
+            block_index = i + 1
+            condition = self.visit(ctx.expression(cond_index))
+            if condition:
+                self.visit(ctx.block(block_index))
+                return None
+
+        # 3️⃣ Final else (edi ...)
+        if ctx.ELSE():
+            # last block index = elif_count + 1
+            self.visit(ctx.block(elif_count + 1))
+        return None
+
 
 
     
