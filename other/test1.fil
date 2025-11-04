@@ -1,0 +1,7 @@
+buhat main() {
+    lods bilang x, y;
+    x etoNaLods 12;
+    y etoNaLods x bawas 2 dagdag 5;
+    yawit y, x;
+    yawit "magaling", x;
+}

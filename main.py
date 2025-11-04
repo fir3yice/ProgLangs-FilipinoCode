@@ -10,13 +10,13 @@ class ErrorListener(ErrorListener):
 
 def main():
     input_code = """
-    lods bilang a etoNaLods 0
+    lods bilang a etoNaLods 0;
     weh (a masGamay 5) {
         yawit("Current: ");
-        @yawit(a);
-        a etoNaLods a dagdag 1;
+        yawit(a);
+        a etoNaLods a dagdag 1
     }
-    yawit("Done!")
+    yawit("Done!");
     """
 
     input_stream = InputStream(input_code)
