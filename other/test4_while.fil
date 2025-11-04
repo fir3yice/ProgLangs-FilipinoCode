@@ -1,4 +1,5 @@
 buhat main() {
+    yawit "Basic While Loop test";
     lods bilang x;
     x etoNaLods 1;
 
@@ -10,6 +11,7 @@ buhat main() {
     yawit "Loop finished! x is now:", x;
 
     x etoNaLods 0;
+    yawit "Break and continue version";
 
     weh (x saktoGamay 5){
         x etoNaLods x dagdag 1;

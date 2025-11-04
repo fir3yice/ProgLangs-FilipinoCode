@@ -1,4 +1,5 @@
 buhat main() {
+    yawit "Basic If else blocks test";
     lods bilang score;
     yawit "Enter your score:";
     ngutana score;

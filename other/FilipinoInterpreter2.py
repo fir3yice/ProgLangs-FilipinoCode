@@ -15,10 +15,12 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         elif dtype == "emoji": return '\0'
         else: return None
 
+    #FilipinoCodeParser.Const_statementContext
+
     #--- Variable Declaration ---
     def visitVardecl_statement(self, ctx: FilipinoCodeParser.Vardecl_statementContext):
         data_type = ctx.data_type().getText()
-        print(data_type)
+        #print(data_type)
         identifiers = [id_.getText() for id_ in ctx.identifier_list().IDENTIFIER()]
         for var in identifiers:
             default_val = self.default_value_for_type(data_type)
@@ -284,30 +286,6 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
                 continue
         return None
         
-    # def visitFor_statement(self, ctx: FilipinoCodeParser.For_statementContext):
-    # # --- Initialization ---
-    #     if ctx.assignment_statement(0):  # first assignment before first semicolon
-    #         self.visit(ctx.assignment_statement(0))
-        
-    #     # --- Condition (optional) ---
-    #     condition = True
-    #     if ctx.expression():
-    #         condition = self.visit(ctx.expression())
-
-    #     # --- Loop ---
-    #     while condition:
-    #         self.visit(ctx.block())  # execute body
-            
-    #         # --- Update (optional second assignment) ---
-    #         if len(ctx.assignment_statement()) > 1:
-    #             self.visit(ctx.assignment_statement(1))
-            
-    #         # --- Re-evaluate condition ---
-    #         if ctx.expression():
-    #             condition = self.visit(ctx.expression())
-    #         else:
-    #             condition = True  # default true if no condition
-    #     return None
 
     def visitFor_statement(self, ctx: FilipinoCodeParser.For_statementContext):
         # --- Initialization (optional) ---
@@ -347,6 +325,21 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
 
     def visitContinue_statement(self, ctx):
         raise ContinueSignal()
+    
+    # --- Block Scoping ---
+    def visitBlock(self, ctx: FilipinoCodeParser.BlockContext):
+        # Create a new scope with current as parent
+        previous_scope = self.global_scope
+        self.global_scope = SymbolTable(parent=previous_scope)
+
+        # Execute all statements inside the block
+        for stmt in ctx.statement():
+            self.visit(stmt)
+
+        # After finishing block, restore previous scope
+        self.global_scope = previous_scope
+        return None
+
 
 
     # --- Program entry ---

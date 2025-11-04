@@ -40,7 +40,7 @@ def print_tree_lines(node, prefix="", is_last=True):
 
 
 
-input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\test4_while.fil", encoding="utf-8")
+input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\test1.fil", encoding="utf-8")
 lexer = FilipinoCodeLexer(input_stream)
 tokens = CommonTokenStream(lexer)
 parser = FilipinoCodeParser(tokens)

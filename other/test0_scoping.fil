@@ -1,0 +1,21 @@
+buhat main() {
+    yawit "Basic Scoping Test"
+    lods bilang x;
+    x etoNaLods 10;
+
+    yawit "Before block:", x;
+
+    {
+        lods bilang x;
+        x etoNaLods 99;
+        yawit "Inside block:", x;
+
+        {
+            lods bilang x;
+            x etoNaLods 100;
+            yawit "Inside the next block:", x;
+        }
+    }
+
+    yawit "After block:", x;
+}
