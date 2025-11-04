@@ -15,16 +15,35 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         elif dtype == "emoji": return '\0'
         else: return None
 
-    #FilipinoCodeParser.Const_statementContext
+    # --- Constant Declaration (forever) ---
+    def visitConst_statement(self, ctx: FilipinoCodeParser.Const_statementContext):
+        dtype = ctx.data_type().getText()
+        name = ctx.IDENTIFIER().getText()
+        value = self.visit(ctx.expression())
+
+        # Check if already declared in this scope
+        if name in self.global_scope.symbols:
+            raise NameError(f"[Semantic Error] Constant '{name}' already declared in this scope.")
+
+        # Define constant (is_const=True)
+        self.global_scope.define(name, dtype, value, is_const=True)
+        return None
+
 
     #--- Variable Declaration ---
     def visitVardecl_statement(self, ctx: FilipinoCodeParser.Vardecl_statementContext):
         data_type = ctx.data_type().getText()
-        #print(data_type)
         identifiers = [id_.getText() for id_ in ctx.identifier_list().IDENTIFIER()]
         for var in identifiers:
+
+            #check if it exists as a constant
+            symbol = self.global_scope.initial_resolve(var)
+            if symbol is not None and symbol.is_const: # i love lazy evaluation
+                #if symbol.is_const:
+                raise TypeError(f"[Semantic Error] Identifier '{var}' is already defined as a constant. Choose a different name.")
+
             default_val = self.default_value_for_type(data_type)
-            self.global_scope.define(var, data_type, default_val)
+            self.global_scope.define(var, data_type, default_val, is_const=False)
         return None
 
     # --- Assignment ---

@@ -4,7 +4,7 @@ class SymbolTable:
         self.parent = parent  # for nested scopes later (functions, blocks)
 
     #def define(self, name, value):
-    def define(self, name, dtype, value, is_const=False):
+    def define(self, name, dtype, value, is_const):
         """Create or update a variable in the current scope."""
         self.symbols[name] = Symbol(name, dtype, value, is_const)
         #TODO: CONSTANTS
@@ -27,11 +27,23 @@ class SymbolTable:
             raise NameError(f"Undefined variable '{name}'")
         
     def initial_resolve(self, name):
+        #this might be broken but im not 100% sure
         """Initial resolver for declaring variables"""
         if name in self.symbols:
-            return
+            return self.symbols[name]
         elif self.parent:
             return self.parent.initial_resolve(name)
+        
+    # def initial_resolve(self, name):
+    #     """Forbid redeclaration of constants anywhere in parent chain."""
+    #     if name in self.symbols:
+    #         return self.symbols[name]
+    #     elif self.parent:
+    #         sym = self.parent.initial_resolve(name)
+    #         if sym and sym.is_const:
+    #             return sym
+    #     return None
+
     
 
     def __repr__(self):

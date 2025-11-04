@@ -24,4 +24,21 @@ buhat main() {
         yawit x;
     }
     yawit "Loop finished! x is now:", x;
+
+    x etoNaLods 0;
+    weh (x saktoGamay 5){
+        x etoNaLods x dagdag 1;
+        ediwow ( x parehasLods 2){
+            padayon; //continue
+        }
+        weh (x saktoGamay 5){
+            x etoNaLods x dagdag 1;
+            yawit "inner loop", x;
+            ediwow (x saktoDako 3) {
+                charot;
+            }
+        }
+        yawit "outer loop", x;
+    }
+
 }
