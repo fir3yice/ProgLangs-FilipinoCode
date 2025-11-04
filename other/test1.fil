@@ -1,7 +1,19 @@
 buhat main() {
-    lods bilang x, y;
-    x etoNaLods 12;
-    y etoNaLods x bawas 2 dagdag 5;
-    yawit y, x;
-    yawit "magaling", x;
+    lods bilang age;
+    lods dobols height;
+    lods tsismis name;
+    lods emoji initial;
+
+    yawit "Testing input system!";
+
+    ngutana age;
+    ngutana height;
+    ngutana name;
+    ngutana initial;
+
+    yawit "Values after input:";
+    yawit "Age ➜", age;
+    yawit "Height ➜", height;
+    yawit "Name ➜", name;
+    yawit "Initial ➜", initial;
 }

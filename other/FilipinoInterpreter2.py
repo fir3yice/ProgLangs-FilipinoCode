@@ -8,27 +8,62 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         super().__init__()
         self.global_scope = SymbolTable()
     
-    
+    def default_value_for_type(self, dtype):
+        if dtype == "bilang": return 0
+        elif dtype == "dobols": return 0.0
+        elif dtype == "tsismis": return ""
+        elif dtype == "emoji": return '\0'
+        else: return None
 
     #--- Variable Declaration ---
     def visitVardecl_statement(self, ctx: FilipinoCodeParser.Vardecl_statementContext):
         data_type = ctx.data_type().getText()
+        print(data_type)
         identifiers = [id_.getText() for id_ in ctx.identifier_list().IDENTIFIER()]
         for var in identifiers:
-            if self.global_scope.initial_resolve(var) is not None:
-                print(f"[Semantic Error] Variable '{var}' already declared.")
-            else:
-                self.global_scope.define(var, 0)
+            default_val = self.default_value_for_type(data_type)
+            self.global_scope.define(var, data_type, default_val)
         return None
 
     # --- Assignment ---
     def visitAssignment_statement(self, ctx: FilipinoCodeParser.Assignment_statementContext):
         name = ctx.IDENTIFIER().getText()
         value = self.visit(ctx.expression())
-        if self.global_scope.resolve(name) is None:
+
+        try:
+            symbol = self.global_scope.resolve(name)
+        except NameError:
             print(f"[Runtime Error] Variable '{name}' not declared.")
-        else:
-            self.global_scope.assign(name, value)
+            return None
+        
+        if symbol.is_const:
+            raise TypeError(f"[Semantic Error] Cannot reassign to constant '{name}'")
+
+        declared_type = symbol.dtype
+        if declared_type == "bilang":  # int
+            if isinstance(value, float):
+                print(f"[Coercion] Converting float '{value}' to int for '{name}'")
+                value = int(value)
+            elif isinstance(value, str):
+                raise TypeError(f"[Type Error] Cannot assign string to int variable '{name}'")
+
+        elif declared_type == "dobols":  # float
+            if isinstance(value, int):
+                print(f"[Coercion] Converting int '{value}' to float for '{name}'")
+                value = float(value)
+            elif isinstance(value, str):
+                raise TypeError(f"[Type Error] Cannot assign string to float variable '{name}'")
+
+        elif declared_type == "tsismis":  # string
+            if not isinstance(value, str):
+                raise TypeError(f"[Type Error] Expected string for '{name}', got {type(value).__name__}")
+
+        elif declared_type == "emoji":  # char
+            if not (isinstance(value, str) and len(value) == 1):
+                raise TypeError(f"[Type Error] Expected single character for '{name}'")
+
+        # === Store final value ===
+        symbol.value = value
         return None
 
     # --- Print (yawit) ---
@@ -122,10 +157,11 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             return self.visit(ctx.value())
         if ctx.IDENTIFIER():
             name = ctx.IDENTIFIER().getText()
-            value = self.global_scope.resolve(name)
-            if value is None:
+            symbol = self.global_scope.resolve(name)
+            if symbol is None:
                 print(f"[Runtime Error] Variable '{name}' not defined.")
-            return value
+                return 0
+            return symbol.value
         return 0
 
     # --- Value Literals ---
@@ -144,7 +180,72 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             return None
         return 0
     
+
+    def visitInput_statement(self, ctx: FilipinoCodeParser.Input_statementContext):
+        var_name = ctx.IDENTIFIER().getText()
+
+        # Look up variable
+        try:
+            symbol = self.global_scope.resolve(var_name)
+        except NameError:
+            print(f"[Runtime Error] Variable '{var_name}' not declared.")
+            return None
+
+        # Get user input
+        user_input = input(f"[Input] {var_name} ➜ ")
+
+        # Detect value type from input
+        value = user_input
+        if user_input.lower() in ["meron", "alaws"]:
+            value = user_input.lower() == "meron"
+        else:
+            try:
+                if "." in user_input:
+                    value = float(user_input)
+                else:
+                    value = int(user_input)
+            except ValueError:
+                pass  # leave as string if not numeric
+
+        # === Type checking & coercion ===
+        dtype = symbol.dtype
+
+        if dtype == "bilang":  # int
+            if isinstance(value, float):
+                print(f"[Coercion] Converting float '{value}' to int for '{var_name}'")
+                value = int(value)
+            elif isinstance(value, str) and not value.isdigit():
+                print(f"[Type Error] Cannot assign non-numeric string '{value}' to int variable '{var_name}'")
+                return None
+
+        elif dtype == "dobols":  # float
+            if isinstance(value, int):
+                print(f"[Coercion] Converting int '{value}' to float for '{var_name}'")
+                value = float(value)
+            elif isinstance(value, str):
+                try:
+                    value = float(value)
+                except ValueError:
+                    print(f"[Type Error] Cannot assign non-numeric string '{value}' to float variable '{var_name}'")
+                    return None
+
+        elif dtype == "tsismis":  # string
+            if not isinstance(value, str):
+                value = str(value)
+
+        elif dtype == "emoji":  # char
+            if isinstance(value, str) and len(value) != 1:
+                print(f"[Type Error] Expected single character for '{var_name}', got '{value}'")
+                return None
+            ##TODO: FIX: inputting int worked fsr
+
+        # Store updated value
+        symbol.value = value
+        return None
+
+
     
+
     # --- Program entry ---
     def visitProgram(self, ctx: FilipinoCodeParser.ProgramContext):
         # Visit all children (use list, consts, functions, main)

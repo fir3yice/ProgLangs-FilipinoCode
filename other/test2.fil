@@ -1,0 +1,5 @@
+buhat main() {
+    lods bilang age;
+    age etoNaLods 10;
+    yawit age dagdag 22;
+}
