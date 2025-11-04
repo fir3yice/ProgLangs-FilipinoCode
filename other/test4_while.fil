@@ -1,0 +1,11 @@
+buhat main() {
+    lods bilang x;
+    x etoNaLods 1;
+
+    weh (x saktoGamay 5) {
+        yawit "x =", x;
+        x etoNaLods x dagdag 1;
+    }
+
+    yawit "Loop finished! x is now:", x;
+}

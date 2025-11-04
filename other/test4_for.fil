@@ -1,0 +1,7 @@
+buhat main() {
+    lods bilang i;
+
+    sakalam (i etoNaLods 0; i saktoGamay 5; i etoNaLods i dagdag 1) {
+        yawit i;
+    }
+}

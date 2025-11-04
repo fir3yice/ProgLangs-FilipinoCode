@@ -268,7 +268,41 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             self.visit(ctx.block(elif_count + 1))
         return None
 
+    
+    def visitWhile_statement(self, ctx: FilipinoCodeParser.While_statementContext):
+    # Evaluate condition
+        condition = self.visit(ctx.expression())
+        
+        # While true, execute the block
+        while condition:
+            self.visit(ctx.block())
+            condition = self.visit(ctx.expression())  # Re-evaluate after each loop
+        return None
+        
+    def visitFor_statement(self, ctx: FilipinoCodeParser.For_statementContext):
+    # --- Initialization ---
+        if ctx.assignment_statement(0):  # first assignment before first semicolon
+            self.visit(ctx.assignment_statement(0))
+        
+        # --- Condition (optional) ---
+        condition = True
+        if ctx.expression():
+            condition = self.visit(ctx.expression())
 
+        # --- Loop ---
+        while condition:
+            self.visit(ctx.block())  # execute body
+            
+            # --- Update (optional second assignment) ---
+            if len(ctx.assignment_statement()) > 1:
+                self.visit(ctx.assignment_statement(1))
+            
+            # --- Re-evaluate condition ---
+            if ctx.expression():
+                condition = self.visit(ctx.expression())
+            else:
+                condition = True  # default true if no condition
+        return None
 
     
 
