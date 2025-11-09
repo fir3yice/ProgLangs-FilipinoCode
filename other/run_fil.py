@@ -41,7 +41,7 @@ def print_tree_lines(node, prefix="", is_last=True):
 # test0_scoping test1_iomath test3_if_else test4_for test4_while
 
 
-input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\test4_while.fil", encoding="utf-8")
+input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\test0_scoping.fil", encoding="utf-8")
 lexer = FilipinoCodeLexer(input_stream)
 tokens = CommonTokenStream(lexer)
 parser = FilipinoCodeParser(tokens)

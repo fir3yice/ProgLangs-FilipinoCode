@@ -5,7 +5,6 @@ from symbol_table import SymbolTable
 
 ## TODO: Domain layer 
 ## TODO: functions and subroutines
-## TODO: fix constants (check)
 ## TODO: increment and decrement, += -= etc?
 ## TODO: uselists
 ## TODO: error handling improvements
