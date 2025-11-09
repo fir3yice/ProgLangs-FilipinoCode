@@ -4,16 +4,15 @@ program
     : use_list? constdecl_list? funcdecl_list? main_function EOF
     ;
 
-// ---------------- Main & function content ----------------
 main_function
-    : FUNCTION 'main' LPAREN RPAREN function_content
+    : FUNCTION MAIN LPAREN RPAREN function_content
     ;
 
 function_content
     : block // { statements }, change to allow single statement?
     ;
 
-// ---------------- Statements ----------------
+// Statements 
 statement
     : assignment_statement SEMICOLON
     | funccall_stmt SEMICOLON
@@ -113,7 +112,7 @@ arith_factor
     | value
     ;
 
-// ---------------- Values ----------------
+// Values, Identifiers, and similar
 value
     : INTEGER
     | FLOAT
@@ -123,7 +122,6 @@ value
     | NULL_LITERAL
     ;
 
-// ---------------- Declarations ----------------
 vardecl_statement
     : VAR data_type identifier_list
     ;
@@ -141,7 +139,7 @@ identifier_list
     : IDENTIFIER (COMMA IDENTIFIER)*
     ;
 
-// ---------------- Functions ----------------
+// Functions
 funcdecl_list
     : (function_declaration)*
     ;
@@ -162,7 +160,7 @@ parameter
     : data_type IDENTIFIER
     ;
 
-// ---------------- Parameters & returns ----------------
+// Parameters & returns
 actual_parameter_list
     : expression (COMMA expression)*
     ;
@@ -171,7 +169,7 @@ return_statement
     : RETURN expression?
     ;
 
-// ---------------- Blocks, control flow ----------------
+// Blocks & control flow
 block
     : LBRACE statement* RBRACE
     ;
@@ -188,7 +186,7 @@ for_statement
     : FOR LPAREN (assignment_statement SEMICOLON | SEMICOLON) expression? SEMICOLON assignment_statement? RPAREN block
     ;
 
-// ---------------- IO ----------------
+// I/O
 print_statement
     : PRINT expression (COMMA expression)*
     ;
@@ -197,7 +195,7 @@ input_statement
     : READ IDENTIFIER
     ;
 
-// ---------------- Constants & use ----------------
+// Constants & use
 constdecl_list
     : (const_statement)*
     ;
@@ -214,9 +212,10 @@ use_statement
     : USE IDENTIFIER '.' IDENTIFIER SEMICOLON
     ;
 
-// ---------------- Lexer tokens ----------------
-// Main Keywords 
-FUNCTION            : 'buhat';
+// ---------------- Lexical Definitions ----------------
+// Main Keywords
+MAIN            : 'main'; 
+FUNCTION        : 'buhat';
 RETURN          : 'uwianNa';
 VAR             : 'lods';
 BREAK           : 'charot';
@@ -246,7 +245,7 @@ KW_STRING       : 'tsismis';
 BOOLEAN_LITERAL : 'meron' | 'alaws';
 NULL_LITERAL    : 'waley';
 
-// IO
+// I/O
 READ            : 'ngutana';
 PRINT           : 'yawit';
 
@@ -285,9 +284,10 @@ LBRACE          : '{';
 RBRACE          : '}';
 SEMICOLON       : ';';
 COMMA           : ',';
-REFERENCE       : '&';
-DEREFERENCE     : '*';
-
+REFERENCE       : '&'; //probably wont implement
+DEREFERENCE     : '*'; //probably wont implement
+ 
+// Identifier & data types
 IDENTIFIER      : [a-zA-Z_][a-zA-Z0-9_]*;
 
 FLOAT           : [0-9]+ '.' [0-9]+ ([eE][+-]?[0-9]+)? ;

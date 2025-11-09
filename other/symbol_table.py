@@ -1,24 +1,22 @@
 class SymbolTable:
     def __init__(self, parent=None):
         self.symbols = {}
-        self.parent = parent  # for nested scopes later (functions, blocks)
+        self.parent = parent  
 
-    #def define(self, name, value):
     def define(self, name, dtype, value, is_const):
-        """Create or update a variable in the current scope."""
+        # Create variables in scope
         self.symbols[name] = Symbol(name, dtype, value, is_const)
-        #TODO: CONSTANTS
 
     def assign(self, name, value):
-        """Create or update a variable in the current scope."""
+        # Update an identifier's value
         sym = self.symbols[name]
         if sym.is_const:
-            raise TypeError(f"Cannot reassign to constant '{name}'.")
+            raise TypeError(f"Cannot reassign to constant '{name}'.") # The (global) constants
         sym.value = value
         return
 
     def resolve(self, name):
-        """Look up a variable by name, checking parent scopes."""
+        # Lookup var name for scoping
         if name in self.symbols:
             return self.symbols[name]
         elif self.parent:
@@ -27,15 +25,15 @@ class SymbolTable:
             raise NameError(f"Undefined variable '{name}'")
         
     def initial_resolve(self, name):
-        #this might be broken but im not 100% sure
-        """Initial resolver for declaring variables"""
+        # Initial resolver to check if the name exists in above scopes, particularly for constants
+        # IE, a constant is global, the name cannot be reused in a different/child {} scope
+        # this might be broken but im not 100% sure
         if name in self.symbols:
             return self.symbols[name]
         elif self.parent:
             return self.parent.initial_resolve(name)
         
     # def initial_resolve(self, name):
-    #     """Forbid redeclaration of constants anywhere in parent chain."""
     #     if name in self.symbols:
     #         return self.symbols[name]
     #     elif self.parent:
@@ -43,8 +41,6 @@ class SymbolTable:
     #         if sym and sym.is_const:
     #             return sym
     #     return None
-
-    
 
     def __repr__(self):
         return str(self.symbols)
@@ -55,7 +51,7 @@ class Symbol:
         self.name = name
         self.dtype = dtype
         self.value = value
-        self.is_const = is_const  # optional: for 'forever' constants
+        self.is_const = is_const 
 
     def __repr__(self):
         return f"Symbol(name={self.name}, type={self.dtype}, value={self.value}, const={self.is_const})"

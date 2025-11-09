@@ -10,9 +10,10 @@ from account import Account
 ## TODO: uselists
 ## TODO: error handling improvements
 
-
 allowed_types = ["bilang", "dobols", "tsismis", "emoji"]
 
+# Visitor extends parsetree huh
+# Interpreter class because re-writing things into regenerated visitors is not fun
 class FilipinoInterpreter(FilipinoCodeVisitor):
     def __init__(self):
         super().__init__()
@@ -26,7 +27,6 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         elif dtype == "emoji": return '\0'
         else: return None
 
-    # --- Constant Declaration (forever) ---
     def visitConst_statement(self, ctx: FilipinoCodeParser.Const_statementContext):
         dtype = ctx.data_type().getText()
         name = ctx.IDENTIFIER().getText()
@@ -34,7 +34,6 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
 
         if name in self.global_scope.symbols:
             raise NameError(f"[Semantic Error] Constant '{name}' already declared in this scope.")
-        
         
         if dtype == "bilang":
             if isinstance(value, float):
@@ -73,10 +72,9 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         identifiers = [id_.getText() for id_ in ctx.identifier_list().IDENTIFIER()]
         for name in identifiers:
 
-            #check if it exists as a constant
+            # check if it exists as a constant
             symbol = self.global_scope.initial_resolve(name)
             if symbol is not None and symbol.is_const: # i love lazy evaluation
-                #if symbol.is_const:
                 raise TypeError(f"[Semantic Error] Identifier '{name}' is already defined as a constant. Choose a different name.")
             if data_type not in allowed_types:
                 raise TypeError(f"[Type Error] Datatype does not exist for {name}.")
@@ -125,17 +123,14 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             if not (isinstance(value, str) and len(value) == 1):
                 raise TypeError(f"[Type Error] Expected single character for '{name}'")
 
-        # === Store final value ===
         symbol.value = value
         return None
 
-    # --- Print (yawit) ---
     def visitPrint_statement(self, ctx: FilipinoCodeParser.Print_statementContext):
         values = [self.visit(expr) for expr in ctx.expression()]
         print(*values)
         return None
 
-    # --- Expression Entry ---
     def visitExpression(self, ctx: FilipinoCodeParser.ExpressionContext):
         return self.visit(ctx.bool_expr())
 
@@ -247,20 +242,18 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
     def visitInput_statement(self, ctx: FilipinoCodeParser.Input_statementContext):
         var_name = ctx.IDENTIFIER().getText()
 
-        # Look up variable
         try:
             symbol = self.global_scope.resolve(var_name)
         except NameError:
             print(f"[Runtime Error] Variable '{var_name}' not declared.")
             return None
 
-        # Get user input
         user_input = input(f"[Input] {var_name} ➜ ")
 
         # Detect value type from input
         value = user_input
         if user_input.lower() in ["meron", "alaws"]:
-            value = user_input.lower() == "meron"
+            value = user_input.lower() == "meron" #TODO: Check this
         else:
             try:
                 if "." in user_input:
@@ -270,7 +263,6 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             except ValueError:
                 pass  # leave as string if not numeric
 
-        # === Type checking & coercion ===
         dtype = symbol.dtype
 
         if dtype == "bilang":  # int
@@ -300,43 +292,36 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             if isinstance(value, str) and len(value) != 1:
                 print(f"[Type Error] Expected single character for '{var_name}', got '{value}'")
                 return None
-            ##TODO: FIX: inputting int worked fsr
+            ##TODO: accounts
 
-        # Store updated value
         symbol.value = value
         return None
     
 
-    # --- If / Else / Else If ---
+    # Control flow
     def visitIf_statement(self, ctx: FilipinoCodeParser.If_statementContext):
-        # 1️⃣ Main if
         main_condition = self.visit(ctx.expression(0))
         if main_condition:
             self.visit(ctx.block(0))
-            return None  # Stop after first true branch
+            return None
 
-        # 2️⃣ Else ifs (ediAno ...)
         elif_count = len(ctx.ELSE_IF())
         for i in range(elif_count):
-            cond_index = i + 1  # expression index after the main one
+            cond_index = i + 1 
             block_index = i + 1
             condition = self.visit(ctx.expression(cond_index))
             if condition:
                 self.visit(ctx.block(block_index))
                 return None
 
-        # 3️⃣ Final else (edi ...)
         if ctx.ELSE():
-            # last block index = elif_count + 1
             self.visit(ctx.block(elif_count + 1))
         return None
 
     
     def visitWhile_statement(self, ctx: FilipinoCodeParser.While_statementContext):
-    # Evaluate condition
         condition = self.visit(ctx.expression())
-        
-        # While true, execute the block
+        # could simplify it but eh
         while condition:
             try:
                 self.visit(ctx.block())
@@ -349,35 +334,32 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         
 
     def visitFor_statement(self, ctx: FilipinoCodeParser.For_statementContext):
-        # --- Initialization (optional) ---
+        # By definition the for statement can be empty
+        # Also note that the identifier hsa to be declared outside of the for()
         if ctx.assignment_statement(0):  
             self.visit(ctx.assignment_statement(0))
         
-        # --- Condition (optional) ---
         condition = True
         if ctx.expression():
             condition = self.visit(ctx.expression())
 
-        # --- Loop execution ---
         while condition:
             try:
                 self.visit(ctx.block())  # execute body
             except BreakSignal:
                 break
             except ContinueSignal:
-                # skip to update phase without running rest of block
                 pass
 
-            # --- Update (optional) ---
             if len(ctx.assignment_statement()) > 1:
                 self.visit(ctx.assignment_statement(1))
-            
-            # --- Re-evaluate condition ---
+        
             if ctx.expression():
                 condition = self.visit(ctx.expression())
             else:
-                condition = True  # default: always true (infinite loop)
-        
+                condition = True
+                # Since an empty conditional for loop is just a while true
+                # TIL.
         return None
 
 
@@ -387,25 +369,21 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
     def visitContinue_statement(self, ctx):
         raise ContinueSignal()
     
-    # --- Block Scoping ---
+    # Scoping, based on blocks, which are based on '{ statements }'
     def visitBlock(self, ctx: FilipinoCodeParser.BlockContext):
         # Create a new scope with current as parent
         previous_scope = self.global_scope
         self.global_scope = SymbolTable(parent=previous_scope)
 
-        # Execute all statements inside the block
         for stmt in ctx.statement():
             self.visit(stmt)
 
-        # After finishing block, restore previous scope
         self.global_scope = previous_scope
         return None
 
 
 
-    # --- Program entry ---
     def visitProgram(self, ctx: FilipinoCodeParser.ProgramContext):
-        # Visit all children (use list, consts, functions, main)
         for child in ctx.getChildren():
             self.visit(child)
         return None
