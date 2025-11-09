@@ -11,11 +11,13 @@ from account import Account
 ## TODO: error handling improvements
 
 
+allowed_types = ["bilang", "dobols", "tsismis", "emoji"]
 
 class FilipinoInterpreter(FilipinoCodeVisitor):
     def __init__(self):
         super().__init__()
         self.global_scope = SymbolTable()
+    
     
     def default_value_for_type(self, dtype):
         if dtype == "bilang": return 0
@@ -55,6 +57,12 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             if not (isinstance(value, str) and len(value) == 1):
                 raise TypeError(f"[Type Error] Expected single character for '{name}'")
             
+        elif dtype == "account":
+            raise TypeError(f"[Type Error] Account types cannot be made constant but '{name}' was declared as one.")
+        
+        else:
+            raise TypeError(f"[Type Error] Datatype does not exist for '{name}'.")
+            
         self.global_scope.define(name, dtype, value, is_const=True)
         return None
 
@@ -63,16 +71,21 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
     def visitVardecl_statement(self, ctx: FilipinoCodeParser.Vardecl_statementContext):
         data_type = ctx.data_type().getText()
         identifiers = [id_.getText() for id_ in ctx.identifier_list().IDENTIFIER()]
-        for var in identifiers:
+        for name in identifiers:
 
             #check if it exists as a constant
-            symbol = self.global_scope.initial_resolve(var)
+            symbol = self.global_scope.initial_resolve(name)
             if symbol is not None and symbol.is_const: # i love lazy evaluation
                 #if symbol.is_const:
-                raise TypeError(f"[Semantic Error] Identifier '{var}' is already defined as a constant. Choose a different name.")
+                raise TypeError(f"[Semantic Error] Identifier '{name}' is already defined as a constant. Choose a different name.")
+            if data_type not in allowed_types:
+                raise TypeError(f"[Type Error] Datatype does not exist for {name}.")
 
             default_val = self.default_value_for_type(data_type)
-            self.global_scope.define(var, data_type, default_val, is_const=False)
+            if data_type == "account":
+                self.global_scope.define(name, data_type, Account(name), is_const=False)
+            else:
+                self.global_scope.define(name, data_type, default_val, is_const=False)
         return None
 
     # --- Assignment ---
