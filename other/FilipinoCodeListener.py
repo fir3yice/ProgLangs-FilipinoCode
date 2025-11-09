@@ -44,6 +44,51 @@ class FilipinoCodeListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by FilipinoCodeParser#deposit_statement.
+    def enterDeposit_statement(self, ctx:FilipinoCodeParser.Deposit_statementContext):
+        pass
+
+    # Exit a parse tree produced by FilipinoCodeParser#deposit_statement.
+    def exitDeposit_statement(self, ctx:FilipinoCodeParser.Deposit_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by FilipinoCodeParser#withdraw_statement.
+    def enterWithdraw_statement(self, ctx:FilipinoCodeParser.Withdraw_statementContext):
+        pass
+
+    # Exit a parse tree produced by FilipinoCodeParser#withdraw_statement.
+    def exitWithdraw_statement(self, ctx:FilipinoCodeParser.Withdraw_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by FilipinoCodeParser#show_balance_statement.
+    def enterShow_balance_statement(self, ctx:FilipinoCodeParser.Show_balance_statementContext):
+        pass
+
+    # Exit a parse tree produced by FilipinoCodeParser#show_balance_statement.
+    def exitShow_balance_statement(self, ctx:FilipinoCodeParser.Show_balance_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by FilipinoCodeParser#transfer_statement.
+    def enterTransfer_statement(self, ctx:FilipinoCodeParser.Transfer_statementContext):
+        pass
+
+    # Exit a parse tree produced by FilipinoCodeParser#transfer_statement.
+    def exitTransfer_statement(self, ctx:FilipinoCodeParser.Transfer_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by FilipinoCodeParser#interest_statement.
+    def enterInterest_statement(self, ctx:FilipinoCodeParser.Interest_statementContext):
+        pass
+
+    # Exit a parse tree produced by FilipinoCodeParser#interest_statement.
+    def exitInterest_statement(self, ctx:FilipinoCodeParser.Interest_statementContext):
+        pass
+
+
     # Enter a parse tree produced by FilipinoCodeParser#break_statement.
     def enterBreak_statement(self, ctx:FilipinoCodeParser.Break_statementContext):
         pass

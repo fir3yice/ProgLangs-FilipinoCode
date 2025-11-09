@@ -27,7 +27,33 @@ statement
     | print_statement SEMICOLON
     | input_statement SEMICOLON
     | vardecl_statement SEMICOLON
+    | deposit_statement SEMICOLON
+    | withdraw_statement SEMICOLON
+    | show_balance_statement SEMICOLON
+    | transfer_statement SEMICOLON
+    | interest_statement SEMICOLON
     ;
+
+deposit_statement
+    : DEPOSIT expression SA IDENTIFIER
+    ;
+
+withdraw_statement
+    : WITHDRAW expression SA IDENTIFIER
+    ;
+
+show_balance_statement
+    : SHOWBALANCE LPAREN IDENTIFIER RPAREN
+    ;
+
+transfer_statement
+    : TRANSFER expression GIKAN IDENTIFIER NGADTO IDENTIFIER
+    ;
+
+interest_statement
+    : COMPUTEINTEREST LPAREN IDENTIFIER COMMA expression RPAREN
+    ;
+
 
 break_statement 
     : BREAK SEMICOLON 
@@ -107,6 +133,7 @@ data_type
     | KW_DOUBLE
     | KW_CHAR
     | KW_STRING
+    | KW_ACCOUNT
     //KW_BOOLEAN
     ;
 
@@ -187,15 +214,27 @@ use_statement
     : USE IDENTIFIER '.' IDENTIFIER SEMICOLON
     ;
 
-// ---------------- Lexer tokens (keywords first) ----------------
-// Keywords (place before IDENTIFIER)
+// ---------------- Lexer tokens ----------------
+// Main Keywords 
 FUNCTION            : 'buhat';
 RETURN          : 'uwianNa';
 VAR             : 'lods';
 BREAK           : 'charot';
 CONTINUE        : 'padayon';
 CONST           : 'forever';
-USE             : 'use';      // explicit token so 'use' won't be lexed as IDENTIFIER
+USE             : 'use'; 
+
+// Finance Keywords
+DEPOSIT         : 'deposit';
+WITHDRAW        : 'withdraw';
+SHOWBALANCE     : 'showBalance';
+TRANSFER        : 'transfer';
+COMPUTEINTEREST : 'computeInterest';
+SA              : 'sa';
+GIKAN           : 'gikan';
+NGADTO          : 'ngadto';
+
+KW_ACCOUNT : 'account'; // technically should go below but yeah
 
 // Data types
 KW_INT          : 'bilang';
@@ -211,7 +250,7 @@ NULL_LITERAL    : 'waley';
 READ            : 'ngutana';
 PRINT           : 'yawit';
 
-// Operators (word-based)
+// Operators
 PLUS            : 'dagdag';
 MINUS           : 'bawas';
 MULT            : 'dobolDobol';
@@ -232,7 +271,7 @@ AND             : 'uban' | '&&';
 OR              : 'maskinUnsa' | '||';
 NOT             : 'dili';
 
-// Control-flow keywords
+// Control-flow
 IF              : 'ediwow';
 ELSE            : 'edi';
 ELSE_IF         : 'ediAno';
@@ -249,10 +288,8 @@ COMMA           : ',';
 REFERENCE       : '&';
 DEREFERENCE     : '*';
 
-// Identifiers & literals
 IDENTIFIER      : [a-zA-Z_][a-zA-Z0-9_]*;
 
-// Numbers & strings
 FLOAT           : [0-9]+ '.' [0-9]+ ([eE][+-]?[0-9]+)? ;
 INTEGER         : [0-9]+ ;
 STRING          : '"' ( ~["\\] | '\\' . )* '"' ;

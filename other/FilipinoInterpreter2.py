@@ -1,6 +1,7 @@
 from FilipinoCodeVisitor import FilipinoCodeVisitor
 from FilipinoCodeParser import FilipinoCodeParser
 from symbol_table import SymbolTable
+from account import Account
 
 
 ## TODO: Domain layer 

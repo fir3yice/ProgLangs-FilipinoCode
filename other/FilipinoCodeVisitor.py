@@ -29,6 +29,31 @@ class FilipinoCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by FilipinoCodeParser#deposit_statement.
+    def visitDeposit_statement(self, ctx:FilipinoCodeParser.Deposit_statementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by FilipinoCodeParser#withdraw_statement.
+    def visitWithdraw_statement(self, ctx:FilipinoCodeParser.Withdraw_statementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by FilipinoCodeParser#show_balance_statement.
+    def visitShow_balance_statement(self, ctx:FilipinoCodeParser.Show_balance_statementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by FilipinoCodeParser#transfer_statement.
+    def visitTransfer_statement(self, ctx:FilipinoCodeParser.Transfer_statementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by FilipinoCodeParser#interest_statement.
+    def visitInterest_statement(self, ctx:FilipinoCodeParser.Interest_statementContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by FilipinoCodeParser#break_statement.
     def visitBreak_statement(self, ctx:FilipinoCodeParser.Break_statementContext):
         return self.visitChildren(ctx)
