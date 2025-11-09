@@ -10,7 +10,7 @@ main_function
     ;
 
 function_content
-    : block // reuse block which can be a single statement or { statements }
+    : block // { statements }, change to allow single statement?
     ;
 
 // ---------------- Statements ----------------

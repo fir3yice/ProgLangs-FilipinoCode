@@ -3,6 +3,15 @@ from FilipinoCodeParser import FilipinoCodeParser
 from symbol_table import SymbolTable
 
 
+## TODO: Domain layer 
+## TODO: functions and subroutines
+## TODO: fix constants (check)
+## TODO: increment and decrement, += -= etc?
+## TODO: uselists
+## TODO: error handling improvements
+
+
+
 class FilipinoInterpreter(FilipinoCodeVisitor):
     def __init__(self):
         super().__init__()
@@ -21,11 +30,31 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         name = ctx.IDENTIFIER().getText()
         value = self.visit(ctx.expression())
 
-        # Check if already declared in this scope
         if name in self.global_scope.symbols:
             raise NameError(f"[Semantic Error] Constant '{name}' already declared in this scope.")
+        
+        
+        if dtype == "bilang":
+            if isinstance(value, float):
+                print(f"[Coercion] Converting float '{value}' to int for '{name}'")
+                value = int(value)
+            elif isinstance(value, str):
+                raise TypeError(f"[Type Error] Cannot assign string to int variable '{name}'")
+        elif dtype == "dobols":  # float
+            if isinstance(value, int):
+                print(f"[Coercion] Converting int '{value}' to float for '{name}'")
+                value = float(value)
+            elif isinstance(value, str):
+                raise TypeError(f"[Type Error] Cannot assign string to float variable '{name}'")
 
-        # Define constant (is_const=True)
+        elif dtype == "tsismis":  # string
+            if not isinstance(value, str):
+                raise TypeError(f"[Type Error] Expected string for '{name}', got {type(value).__name__}")
+
+        elif dtype == "emoji":  # char
+            if not (isinstance(value, str) and len(value) == 1):
+                raise TypeError(f"[Type Error] Expected single character for '{name}'")
+            
         self.global_scope.define(name, dtype, value, is_const=True)
         return None
 
