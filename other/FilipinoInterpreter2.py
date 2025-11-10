@@ -10,7 +10,7 @@ from account import Account
 ## TODO: uselists
 ## TODO: error handling improvements
 
-allowed_types = ["bilang", "dobols", "tsismis", "emoji"]
+allowed_types = ["bilang", "dobols", "tsismis", "emoji", "account"]
 
 # Visitor extends parsetree huh
 # Interpreter class because re-writing things into regenerated visitors is not fun
@@ -380,6 +380,59 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
 
         self.global_scope = previous_scope
         return None
+    
+
+
+    # Finance
+    def visitDeposit_statement(self, ctx):
+        amount = self.visit(ctx.expression())
+        acc_name = ctx.IDENTIFIER().getText()
+
+        account = self.global_scope.resolve(acc_name)
+        if not isinstance(account.value, Account):
+            raise TypeError(f"[Finance Error] '{acc_name}' is not an account.")
+        account.value.deposit(amount)
+        return None
+
+    def visitWithdraw_statement(self, ctx):
+        amount = self.visit(ctx.expression())
+        acc_name = ctx.IDENTIFIER().getText()
+
+        account = self.global_scope.resolve(acc_name)
+        if not isinstance(account.value, Account):
+            raise TypeError(f"[Finance Error] '{acc_name}' is not an account.")
+        account.value.withdraw(amount)
+        return None
+
+    def visitShow_balance_statement(self, ctx):
+        acc_name = ctx.IDENTIFIER().getText()
+        account = self.global_scope.resolve(acc_name)
+        if not isinstance(account.value, Account):
+            raise TypeError(f"[Finance Error] '{acc_name}' is not an account.")
+        account.value.show_balance()
+        return None
+
+    def visitTransfer_statement(self, ctx):
+        amount = self.visit(ctx.expression())
+        src = ctx.IDENTIFIER(0).getText()
+        dest = ctx.IDENTIFIER(1).getText()
+
+        acc1 = self.global_scope.resolve(src)
+        acc2 = self.global_scope.resolve(dest)
+        if not isinstance(acc1.value, Account) or not isinstance(acc2.value, Account):
+            raise TypeError(f"[Finance Error] Both must be accounts.")
+        acc1.value.transfer(amount, acc2.value)
+        return None
+
+    def visitInterest_statement(self, ctx):
+        acc_name = ctx.IDENTIFIER().getText()
+        rate = self.visit(ctx.expression())
+        account = self.global_scope.resolve(acc_name)
+        if not isinstance(account.value, Account):
+            raise TypeError(f"[Finance Error] '{acc_name}' is not an account.")
+        account.value.compute_interest(rate)
+        return None
+
 
 
 

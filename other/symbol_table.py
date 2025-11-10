@@ -6,6 +6,8 @@ class SymbolTable:
     def define(self, name, dtype, value, is_const):
         # Create variables in scope
         self.symbols[name] = Symbol(name, dtype, value, is_const)
+        #print("Symbol created", self.symbols[name].value.balance)
+        
 
     def assign(self, name, value):
         # Update an identifier's value

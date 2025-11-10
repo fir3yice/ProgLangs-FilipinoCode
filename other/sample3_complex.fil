@@ -1,0 +1,12 @@
+buhat main() {
+    lods account ipon;
+    lods bilang araw;
+    araw etoNaLods 0;
+
+    weh (araw saktoGamay 30) {
+        deposit 50 sa ipon;
+        araw etoNaLods araw dagdag 1;
+    }
+    computeInterest(ipon, 0.05);
+    showBalance(ipon);
+}

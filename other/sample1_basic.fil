@@ -1,0 +1,6 @@
+buhat main() {
+    lods account ipon;
+    deposit 1000 sa ipon;
+    withdraw 200 sa ipon;
+    showBalance(ipon);
+}

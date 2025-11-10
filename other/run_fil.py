@@ -23,15 +23,17 @@ def print_tree(node, prefix="", is_last=True):
 
 #filename repo
 # test0_scoping test1_iomath test3_if_else test4_for test4_while
+# test10_accounts
 
+# sample1_basic sample2_medium sample3_complex
 
-input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\test0_scoping.fil", encoding="utf-8")
+input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\sample2_medium.fil", encoding="utf-8")
 lexer = FilipinoCodeLexer(input_stream)
 tokens = CommonTokenStream(lexer)
 parser = FilipinoCodeParser(tokens)
 tree = parser.program()
 
-#print_tree(tree)
+print_tree(tree)
 
 
 interpreter = FilipinoInterpreter()

@@ -1,0 +1,17 @@
+buhat main() {
+    lods bilang gastos, budget;
+    gastos etoNaLods 400;
+    budget etoNaLods 500;
+
+    lods account emergency;
+    yawit "Should I save? Gastos:", gastos, "| Budget:", budget;
+    ediwow (gastos masDako budget) {
+        yawit "Yes! Transferring to emergency fund.";
+        deposit budget sa emergency;
+        showBalance(emergency);
+    } edi {
+        yawit "You're within budget!";
+        budget etoNaLods budget bawas gastos;
+        yawit "You have", budget, "remaining :)";
+    }
+}
