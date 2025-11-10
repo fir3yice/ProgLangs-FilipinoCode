@@ -1,6 +1,6 @@
 buhat main() {
     lods bilang gastos, budget;
-    gastos etoNaLods 400;
+    gastos etoNaLods 600;
     budget etoNaLods 500;
 
     lods account emergency;
@@ -8,6 +8,8 @@ buhat main() {
     ediwow (gastos masDako budget) {
         yawit "Yes! Transferring to emergency fund.";
         deposit budget sa emergency;
+        showBalance(emergency);
+        withdraw budget sa emergency;
         showBalance(emergency);
     } edi {
         yawit "You're within budget!";

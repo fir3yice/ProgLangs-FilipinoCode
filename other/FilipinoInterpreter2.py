@@ -4,11 +4,12 @@ from symbol_table import SymbolTable
 from account import Account
 
 
-## TODO: Domain layer 
 ## TODO: functions and subroutines
 ## TODO: increment and decrement, += -= etc?
 ## TODO: uselists
 ## TODO: error handling improvements
+
+## TODO: Domain layer double check everything or add complexity idk
 
 allowed_types = ["bilang", "dobols", "tsismis", "emoji", "account"]
 
