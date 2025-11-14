@@ -7,7 +7,7 @@ from account import Account
 ## TODO: functions and subroutines
 ## TODO: increment and decrement, += -= etc?
 ## TODO: uselists
-## TODO: error handling improvements
+## TODO: error handling improvements -- undefined statements
 
 ## TODO: Domain layer double check everything or add complexity idk
 
@@ -19,6 +19,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
     def __init__(self):
         super().__init__()
         self.global_scope = SymbolTable()
+        self.functions = {}
     
     
     def default_value_for_type(self, dtype):
@@ -209,6 +210,8 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         return result
 
     def visitArith_factor(self, ctx: FilipinoCodeParser.Arith_factorContext):
+        if ctx.funccall():
+            return self.visit(ctx.funccall())
         # Handle parentheses and values
         if ctx.LPAREN():
             return self.visit(ctx.expression())
@@ -370,6 +373,13 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
     def visitContinue_statement(self, ctx):
         raise ContinueSignal()
     
+    def visitReturn_statement(self, ctx):
+        if ctx.expression():
+            value = self.visit(ctx.expression())
+        else:
+            value = None
+        raise ReturnSignal(value)
+    
     # Scoping, based on blocks, which are based on '{ statements }'
     def visitBlock(self, ctx: FilipinoCodeParser.BlockContext):
         # Create a new scope with current as parent
@@ -382,6 +392,69 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         self.global_scope = previous_scope
         return None
     
+    # Functions
+    def visitFunction_declaration(self, ctx):
+        sig = ctx.function_signature()
+        name = sig.IDENTIFIER().getText()
+        return_type = None
+
+        parameters = []
+        if sig.parameter_list():
+            for p in sig.parameter_list().parameter():
+                dtype = p.data_type().getText()
+                var = p.IDENTIFIER().getText()
+                parameters.append((dtype, var))
+
+        if sig.data_type():
+            return_type = sig.data_type().getText()
+
+        self.functions[name] = FuncDef(
+            name = name, params = parameters, return_type = return_type,
+            ctx = ctx.function_content()
+        )
+        
+        print (f"Function '{name}' declared with return_type '{return_type}'")
+        print (ctx.function_content())
+
+        return None
+    
+    # def visitFunccall_statement(self, ctx: FilipinoCodeParser.FunccallContext):
+    #     func_name = ctx.IDENTIFIER().getText()
+        
+
+
+    
+    def visitFunccall(self, ctx):
+        name = ctx.IDENTIFIER().getText()
+        #print(f"Function '{name}' was called.")
+        if name not in self.functions:
+            raise NameError(f"[Function Error] Function '{name}' not found. Did you misspell it?")
+        func = self.functions[name]
+
+        parameters = []
+        if ctx.actual_parameter_list():
+            parameters = ctx.actual_parameter_list().expression()
+        if len(parameters) != len(func.params):
+            raise TypeError(f"[Function Error] Got {len(parameters)}, Expected {len(func.params)}")
+        
+        local_scope = SymbolTable(parent = self.global_scope)
+        parent_scope = self.global_scope
+        self.global_scope = local_scope
+
+        for (dtype, param_name), arg in zip(func.params, parameters):
+            value = self.visit(arg)
+            local_scope.define(param_name, dtype, value, False)
+        
+        #print (f"Function '{name}' entered.")
+        result = None
+        try:
+            result = self.visit(func.ctx)
+        except ReturnSignal as ret:
+            result = ret.value
+
+        self.global_scope = parent_scope
+        return result
+
 
 
     # Finance
@@ -447,3 +520,14 @@ class BreakSignal(Exception):
 
 class ContinueSignal(Exception):
     pass
+
+class ReturnSignal(Exception):
+    def __init__(self, value):
+        self.value = value
+
+class FuncDef():
+    def __init__(self, name, params, return_type, ctx):
+        self.name = name
+        self.params = params  # list of (dtype, name)
+        self.return_type = return_type
+        self.ctx = ctx        # function_content context

@@ -66,16 +66,6 @@ assignment_statement
     : IDENTIFIER ASSIGN ( expression | funccall | value )
     ;
 
-// function call as expression
-funccall
-    : IDENTIFIER LPAREN actual_parameter_list? RPAREN
-    ;
-
-// function call as statement (alias)
-funccall_stmt
-    : funccall
-    ;
-
 // ---------------- Expressions ----------------
 // Start with boolean-level rule delegating to arithmetic with precedence
 expression
@@ -152,6 +142,16 @@ function_signature
     : IDENTIFIER LPAREN parameter_list? RPAREN (':' data_type)?
     ;
 
+// function call as expression
+funccall
+    : IDENTIFIER LPAREN actual_parameter_list? RPAREN
+    ;
+
+// function call as statement (alias)
+funccall_stmt
+    : funccall
+    ;
+
 parameter_list
     : parameter (COMMA parameter)*
     ;
@@ -212,7 +212,8 @@ use_statement
     : USE IDENTIFIER '.' IDENTIFIER SEMICOLON
     ;
 
-// ---------------- Lexical Definitions ----------------
+// Lexical Definitions 
+
 // Main Keywords
 MAIN            : 'main'; 
 FUNCTION        : 'buhat';
@@ -284,8 +285,6 @@ LBRACE          : '{';
 RBRACE          : '}';
 SEMICOLON       : ';';
 COMMA           : ',';
-REFERENCE       : '&'; //probably wont implement
-DEREFERENCE     : '*'; //probably wont implement
  
 // Identifier & data types
 IDENTIFIER      : [a-zA-Z_][a-zA-Z0-9_]*;
@@ -300,7 +299,7 @@ LINE_COMMENT    : '//' ~[\r\n]* -> skip ;
 BLOCK_COMMENT   : '/*' .*? '*/' -> skip ;
 WS              : [ \t\r\n]+ -> skip ;
 
-// Fallback / unknown characters (simplified — remove complicated actions)
+
 ERROR_CHAR
     : .
       {
