@@ -4,6 +4,10 @@ program
     : use_list? constdecl_list? funcdecl_list? main_function EOF
     ;
 
+module
+    : constdecl_list? funcdecl_list? EOF
+    ;
+
 main_function
     : FUNCTION MAIN LPAREN RPAREN function_content
     ;

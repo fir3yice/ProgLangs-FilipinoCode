@@ -4,13 +4,11 @@ class SymbolTable:
         self.parent = parent  
 
     def define(self, name, dtype, value, is_const):
-        # Create variables in scope
         self.symbols[name] = Symbol(name, dtype, value, is_const)
         #print("Symbol created", self.symbols[name].value.balance)
         
 
     def assign(self, name, value):
-        # Update an identifier's value
         sym = self.symbols[name]
         if sym.is_const:
             raise TypeError(f"Cannot reassign to constant '{name}'.") # The (global) constants

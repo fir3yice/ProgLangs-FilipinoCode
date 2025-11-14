@@ -1,4 +1,5 @@
 buhat add(bilang a, bilang b) : bilang {
+    test();
     uwianNa a dagdag b;
 }
 
@@ -21,7 +22,7 @@ buhat test(){
 buhat main() {
     yawit "=== FUNCTION TESTS ===";
 
-    test();
+    //test();
 
     // //Test simple math function
     lods bilang sumResult;

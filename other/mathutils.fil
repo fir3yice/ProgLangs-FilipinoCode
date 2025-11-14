@@ -1,0 +1,5 @@
+// mathutils.fil
+forever bilang PI etoNaLods 3;
+buhat add(bilang a, bilang b) : bilang {
+    uwianNa a dagdag b;
+}

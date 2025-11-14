@@ -14,6 +14,11 @@ class FilipinoCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by FilipinoCodeParser#module.
+    def visitModule(self, ctx:FilipinoCodeParser.ModuleContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by FilipinoCodeParser#main_function.
     def visitMain_function(self, ctx:FilipinoCodeParser.Main_functionContext):
         return self.visitChildren(ctx)
@@ -66,16 +71,6 @@ class FilipinoCodeVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by FilipinoCodeParser#assignment_statement.
     def visitAssignment_statement(self, ctx:FilipinoCodeParser.Assignment_statementContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by FilipinoCodeParser#funccall.
-    def visitFunccall(self, ctx:FilipinoCodeParser.FunccallContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by FilipinoCodeParser#funccall_stmt.
-    def visitFunccall_stmt(self, ctx:FilipinoCodeParser.Funccall_stmtContext):
         return self.visitChildren(ctx)
 
 
@@ -146,6 +141,16 @@ class FilipinoCodeVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by FilipinoCodeParser#function_signature.
     def visitFunction_signature(self, ctx:FilipinoCodeParser.Function_signatureContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by FilipinoCodeParser#funccall.
+    def visitFunccall(self, ctx:FilipinoCodeParser.FunccallContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by FilipinoCodeParser#funccall_stmt.
+    def visitFunccall_stmt(self, ctx:FilipinoCodeParser.Funccall_stmtContext):
         return self.visitChildren(ctx)
 
 

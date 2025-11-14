@@ -17,6 +17,15 @@ class FilipinoCodeListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by FilipinoCodeParser#module.
+    def enterModule(self, ctx:FilipinoCodeParser.ModuleContext):
+        pass
+
+    # Exit a parse tree produced by FilipinoCodeParser#module.
+    def exitModule(self, ctx:FilipinoCodeParser.ModuleContext):
+        pass
+
+
     # Enter a parse tree produced by FilipinoCodeParser#main_function.
     def enterMain_function(self, ctx:FilipinoCodeParser.Main_functionContext):
         pass
@@ -113,24 +122,6 @@ class FilipinoCodeListener(ParseTreeListener):
 
     # Exit a parse tree produced by FilipinoCodeParser#assignment_statement.
     def exitAssignment_statement(self, ctx:FilipinoCodeParser.Assignment_statementContext):
-        pass
-
-
-    # Enter a parse tree produced by FilipinoCodeParser#funccall.
-    def enterFunccall(self, ctx:FilipinoCodeParser.FunccallContext):
-        pass
-
-    # Exit a parse tree produced by FilipinoCodeParser#funccall.
-    def exitFunccall(self, ctx:FilipinoCodeParser.FunccallContext):
-        pass
-
-
-    # Enter a parse tree produced by FilipinoCodeParser#funccall_stmt.
-    def enterFunccall_stmt(self, ctx:FilipinoCodeParser.Funccall_stmtContext):
-        pass
-
-    # Exit a parse tree produced by FilipinoCodeParser#funccall_stmt.
-    def exitFunccall_stmt(self, ctx:FilipinoCodeParser.Funccall_stmtContext):
         pass
 
 
@@ -257,6 +248,24 @@ class FilipinoCodeListener(ParseTreeListener):
 
     # Exit a parse tree produced by FilipinoCodeParser#function_signature.
     def exitFunction_signature(self, ctx:FilipinoCodeParser.Function_signatureContext):
+        pass
+
+
+    # Enter a parse tree produced by FilipinoCodeParser#funccall.
+    def enterFunccall(self, ctx:FilipinoCodeParser.FunccallContext):
+        pass
+
+    # Exit a parse tree produced by FilipinoCodeParser#funccall.
+    def exitFunccall(self, ctx:FilipinoCodeParser.FunccallContext):
+        pass
+
+
+    # Enter a parse tree produced by FilipinoCodeParser#funccall_stmt.
+    def enterFunccall_stmt(self, ctx:FilipinoCodeParser.Funccall_stmtContext):
+        pass
+
+    # Exit a parse tree produced by FilipinoCodeParser#funccall_stmt.
+    def exitFunccall_stmt(self, ctx:FilipinoCodeParser.Funccall_stmtContext):
         pass
 
 

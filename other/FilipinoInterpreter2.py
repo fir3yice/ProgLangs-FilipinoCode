@@ -4,22 +4,24 @@ from symbol_table import SymbolTable
 from account import Account
 
 
-## TODO: functions and subroutines
-## TODO: increment and decrement, += -= etc?
-## TODO: uselists
+## TODO: functions and subroutines - done probably
+## TODO: uselists - done probably -- need to doublecheck
+
+## TODO: increment and decrement, += -= etc? probably will only implement the ++ and -- since that's what's in the grammar
 ## TODO: error handling improvements -- undefined statements
 
 ## TODO: Domain layer double check everything or add complexity idk
 
 allowed_types = ["bilang", "dobols", "tsismis", "emoji", "account"]
 
-# Visitor extends parsetree huh
-# Interpreter class because re-writing things into regenerated visitors is not fun
+# Visitor extends parsetree
+# Interpreter class because re-writing things into regenerated visitors is not fun :DDDDD (definitely didn't experience that :DDDDD )
 class FilipinoInterpreter(FilipinoCodeVisitor):
     def __init__(self):
         super().__init__()
         self.global_scope = SymbolTable()
         self.functions = {}
+        self.imported_modules = {}
     
     
     def default_value_for_type(self, dtype):
@@ -43,18 +45,18 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
                 value = int(value)
             elif isinstance(value, str):
                 raise TypeError(f"[Type Error] Cannot assign string to int variable '{name}'")
-        elif dtype == "dobols":  # float
+        elif dtype == "dobols": 
             if isinstance(value, int):
                 print(f"[Coercion] Converting int '{value}' to float for '{name}'")
                 value = float(value)
             elif isinstance(value, str):
                 raise TypeError(f"[Type Error] Cannot assign string to float variable '{name}'")
 
-        elif dtype == "tsismis":  # string
+        elif dtype == "tsismis":  
             if not isinstance(value, str):
                 raise TypeError(f"[Type Error] Expected string for '{name}', got {type(value).__name__}")
 
-        elif dtype == "emoji":  # char
+        elif dtype == "emoji":
             if not (isinstance(value, str) and len(value) == 1):
                 raise TypeError(f"[Type Error] Expected single character for '{name}'")
             
@@ -68,7 +70,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         return None
 
 
-    #--- Variable Declaration ---
+    # Variable Declaration
     def visitVardecl_statement(self, ctx: FilipinoCodeParser.Vardecl_statementContext):
         data_type = ctx.data_type().getText()
         identifiers = [id_.getText() for id_ in ctx.identifier_list().IDENTIFIER()]
@@ -88,7 +90,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
                 self.global_scope.define(name, data_type, default_val, is_const=False)
         return None
 
-    # --- Assignment ---
+    # Assignment
     def visitAssignment_statement(self, ctx: FilipinoCodeParser.Assignment_statementContext):
         name = ctx.IDENTIFIER().getText()
         value = self.visit(ctx.expression())
@@ -136,7 +138,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
     def visitExpression(self, ctx: FilipinoCodeParser.ExpressionContext):
         return self.visit(ctx.bool_expr())
 
-    # --- Boolean Expressions ---
+    # Boolean Expressions 
     def visitBool_expr(self, ctx: FilipinoCodeParser.Bool_exprContext):
         terms = ctx.bool_term()
         if len(terms) == 1:
@@ -157,7 +159,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             return not self.visit(ctx.relational_expr())
         return self.visit(ctx.relational_expr())
 
-    # --- Relational Expressions ---
+    # Relational 
     def visitRelational_expr(self, ctx: FilipinoCodeParser.Relational_exprContext):
         ariths = ctx.arith_expr()
         if len(ariths) == 1:
@@ -182,7 +184,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
 
         return False
 
-    # --- Arithmetic Expressions ---
+    # Arithmetic Expressions
     def visitArith_expr(self, ctx: FilipinoCodeParser.Arith_exprContext):
         terms = ctx.arith_term()
         result = self.visit(terms[0])
@@ -212,7 +214,6 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
     def visitArith_factor(self, ctx: FilipinoCodeParser.Arith_factorContext):
         if ctx.funccall():
             return self.visit(ctx.funccall())
-        # Handle parentheses and values
         if ctx.LPAREN():
             return self.visit(ctx.expression())
         if ctx.value():
@@ -226,7 +227,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             return symbol.value
         return 0
 
-    # --- Value Literals ---
+    # Value Literals 
     def visitValue(self, ctx: FilipinoCodeParser.ValueContext):
         if ctx.INTEGER():
             return int(ctx.INTEGER().getText())
@@ -245,7 +246,6 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
 
     def visitInput_statement(self, ctx: FilipinoCodeParser.Input_statementContext):
         var_name = ctx.IDENTIFIER().getText()
-
         try:
             symbol = self.global_scope.resolve(var_name)
         except NameError:
@@ -254,10 +254,9 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
 
         user_input = input(f"[Input] {var_name} ➜ ")
 
-        # Detect value type from input
         value = user_input
         if user_input.lower() in ["meron", "alaws"]:
-            value = user_input.lower() == "meron" #TODO: Check this
+            value = user_input.lower() == "meron" #TODO: not actually tested
         else:
             try:
                 if "." in user_input:
@@ -265,11 +264,11 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
                 else:
                     value = int(user_input)
             except ValueError:
-                pass  # leave as string if not numeric
+                pass
 
         dtype = symbol.dtype
 
-        if dtype == "bilang":  # int
+        if dtype == "bilang":
             if isinstance(value, float):
                 print(f"[Coercion] Converting float '{value}' to int for '{var_name}'")
                 value = int(value)
@@ -277,7 +276,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
                 print(f"[Type Error] Cannot assign non-numeric string '{value}' to int variable '{var_name}'")
                 return None
 
-        elif dtype == "dobols":  # float
+        elif dtype == "dobols":
             if isinstance(value, int):
                 print(f"[Coercion] Converting int '{value}' to float for '{var_name}'")
                 value = float(value)
@@ -288,11 +287,11 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
                     print(f"[Type Error] Cannot assign non-numeric string '{value}' to float variable '{var_name}'")
                     return None
 
-        elif dtype == "tsismis":  # string
+        elif dtype == "tsismis":
             if not isinstance(value, str):
                 value = str(value)
 
-        elif dtype == "emoji":  # char
+        elif dtype == "emoji":
             if isinstance(value, str) and len(value) != 1:
                 print(f"[Type Error] Expected single character for '{var_name}', got '{value}'")
                 return None
@@ -329,7 +328,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         while condition:
             try:
                 self.visit(ctx.block())
-                condition = self.visit(ctx.expression())  # Re-evaluate after each loop
+                condition = self.visit(ctx.expression())
             except BreakSignal:
                 break
             except ContinueSignal:
@@ -349,7 +348,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
 
         while condition:
             try:
-                self.visit(ctx.block())  # execute body
+                self.visit(ctx.block())
             except BreakSignal:
                 break
             except ContinueSignal:
@@ -421,9 +420,6 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
     # def visitFunccall_statement(self, ctx: FilipinoCodeParser.FunccallContext):
     #     func_name = ctx.IDENTIFIER().getText()
         
-
-
-    
     def visitFunccall(self, ctx):
         name = ctx.IDENTIFIER().getText()
         #print(f"Function '{name}' was called.")
@@ -454,7 +450,53 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
 
         self.global_scope = parent_scope
         return result
+    
+    def visitUse_list(self, ctx: FilipinoCodeParser.Use_listContext):
+        for use_stmt in ctx.use_statement():
+            self.visit(use_stmt)
+        return None
 
+    def visitUse_statement(self, ctx):
+        file_name = ctx.IDENTIFIER(0).getText()
+        symbol_name = ctx.IDENTIFIER(1).getText()
+
+        #read and parse the file contents and convert to part of the parse tree
+        #run through those parts of the parse tree and put it into the respective scopes before proceeding with the rest
+
+        # if symbol_name is not "fil":
+        #     raise ImportError(f"[Use Error] Expected extension \'.fil\', got '{symbol_name}'")
+
+        if file_name not in self.imported_modules:
+            self.imported_modules[file_name] = set()
+        self.imported_modules[file_name].add(symbol_name)
+
+        print("Looking for ", file_name, symbol_name)
+
+        # TODO: Probably change the logic to just use the entire file since the parser goes through everything anyway
+
+        module_file = f"{file_name}.fil"  
+        try:
+            module_file = r"D:\_GitRepos\ProgLangs\other\\" + module_file
+            with open(module_file, "r") as f:
+                source = f.read()
+        except FileNotFoundError:
+            raise FileNotFoundError(f"[Use Error] Module '{module_file}' not found. Perhaps the module is not a \'.fil\' file?")
+
+        from antlr4 import InputStream, CommonTokenStream
+        from FilipinoCodeLexer import FilipinoCodeLexer
+        from FilipinoCodeParser import FilipinoCodeParser
+
+        input_stream = InputStream(source)
+        lexer = FilipinoCodeLexer(input_stream)
+        tokens = CommonTokenStream(lexer)
+        parser = FilipinoCodeParser(tokens)
+        tree = parser.module()
+
+        print(f"[Use] Loading module '{module_file}'")
+        self.visit(tree)
+
+        print(f"[Use] Made '{symbol_name}' from module '{module_file}' available")
+        return None
 
 
     # Finance
@@ -528,6 +570,6 @@ class ReturnSignal(Exception):
 class FuncDef():
     def __init__(self, name, params, return_type, ctx):
         self.name = name
-        self.params = params  # list of (dtype, name)
+        self.params = params
         self.return_type = return_type
-        self.ctx = ctx        # function_content context
+        self.ctx = ctx       
