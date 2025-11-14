@@ -1,0 +1,14 @@
+buhat main() {
+    yawit "Welcome to Habitipid!";
+    lods account ipon;
+    deposit 500 sa ipon;
+    deposit 200 sa ipon;
+    withdraw 150 sa ipon;
+    showBalance(ipon);
+    computeInterest(ipon, 0.05);
+
+    lods account emergency;
+    transfer 100 gikan ipon ngadto emergency;
+    showBalance(ipon);
+    showBalance(emergency);
+}

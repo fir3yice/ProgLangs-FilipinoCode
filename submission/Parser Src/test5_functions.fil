@@ -1,0 +1,46 @@
+buhat add(bilang a, bilang b) : bilang {
+    test();
+    uwianNa a dagdag b;
+}
+
+buhat printAndReturn(bilang x) : bilang {
+    yawit "Inside function, x =", x;
+    uwianNa x dagdag 5;
+}
+
+buhat factorial(bilang n) : bilang {
+    ediwow (n saktoGamay 1) {
+        uwianNa 1;
+    }
+    uwianNa n dobolDobol factorial(n bawas 1);
+}
+
+buhat test(){
+    yawit "hatdog";
+}
+
+buhat main() {
+    yawit "=== FUNCTION TESTS ===";
+
+    //test();
+
+    // //Test simple math function
+    lods bilang sumResult;
+    sumResult etoNaLods add(10, 20);
+    yawit "add(10, 20) =", sumResult;
+
+    // Test return with print inside funct
+    lods bilang newVal;
+    newVal etoNaLods printAndReturn(7);
+    yawit "printAndReturn(7) returned:", newVal;
+
+    // Test recursion — factorial
+    lods bilang f5;
+    f5 etoNaLods factorial(5);
+    yawit "factorial(5) =", f5;
+
+    // Another factorial test
+    lods bilang f7;
+    f7 etoNaLods factorial(7);
+    yawit "factorial(7) =", f7;
+}

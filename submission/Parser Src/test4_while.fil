@@ -1,0 +1,44 @@
+buhat main() {
+    yawit "Basic While Loop test";
+    lods bilang x;
+    x etoNaLods 1;
+
+    weh (x saktoGamay 5) {
+        yawit "x =", x;
+        x etoNaLods x dagdag 1;
+    }
+
+    yawit "Loop finished! x is now:", x;
+
+    x etoNaLods 0;
+    yawit "Break and continue version";
+
+    weh (x saktoGamay 5){
+        x etoNaLods x dagdag 1;
+        ediwow ( x parehasLods 2){
+            padayon; //continue
+        }
+        ediwow ( x parehasLods 4){
+            charot; //break
+        }
+        yawit x;
+    }
+    yawit "Loop finished! x is now:", x;
+
+    x etoNaLods 0;
+    weh (x saktoGamay 5){
+        x etoNaLods x dagdag 1;
+        ediwow ( x parehasLods 2){
+            padayon; //continue
+        }
+        weh (x saktoGamay 5){
+            x etoNaLods x dagdag 1;
+            yawit "inner loop", x;
+            ediwow (x saktoDako 3) {
+                charot;
+            }
+        }
+        yawit "outer loop", x;
+    }
+
+}

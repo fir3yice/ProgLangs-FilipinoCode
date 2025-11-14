@@ -1,0 +1,19 @@
+buhat main() {
+    yawit "Basic For Loop Test";
+    lods bilang i;
+    yawit "basic test";
+    sakalam (i etoNaLods 0; i saktoGamay 5; i etoNaLods i dagdag 1) {
+        yawit i;
+    }
+
+    yawit "Break and continue version";
+    sakalam (i etoNaLods 0; i saktoGamay 5; i etoNaLods i dagdag 1) {
+        ediwow ( i parehasLods 2){
+            padayon; //continue
+        }
+        ediwow ( i parehasLods 4){
+            charot; //break
+        }
+        yawit i;
+    }
+}
