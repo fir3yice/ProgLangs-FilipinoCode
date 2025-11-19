@@ -6,11 +6,14 @@ from account import Account
 
 ## TODO: functions and subroutines - done probably
 ## TODO: uselists - done probably -- need to doublecheck
+## TODO: error handling improvements -- undefined statements
+## TODO: Add optimization techniques (1 or 2. can be anywhere, like the syntax tree)
+## TODO: the debugging stuff
+## TODO: maybe make like a gui or fix the arguments so that it takes the input file as like --i file.fil 
 
 ## TODO: increment and decrement, += -= etc? probably will only implement the ++ and -- since that's what's in the grammar
-## TODO: error handling improvements -- undefined statements
-
 ## TODO: Domain layer double check everything or add complexity idk
+
 
 allowed_types = ["bilang", "dobols", "tsismis", "emoji", "account"]
 
@@ -212,6 +215,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         return result
 
     def visitArith_factor(self, ctx: FilipinoCodeParser.Arith_factorContext):
+        
         if ctx.funccall():
             return self.visit(ctx.funccall())
         if ctx.LPAREN():
@@ -396,6 +400,9 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         sig = ctx.function_signature()
         name = sig.IDENTIFIER().getText()
         return_type = None
+
+        if name in self.functions:
+            raise NameError(f"[Function Error] Function named '{name}' already exists.")
 
         parameters = []
         if sig.parameter_list():

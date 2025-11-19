@@ -1,23 +1,10 @@
 buhat main() {
-    yawit "Basic test for input output and arithmetic";
-    lods aaa test;
+    yawit "Basic test";
+    //lods aaa test;
     lods bilang age;
     lods dobols height;
     lods tsismis name;
     lods emoji initial;
-
-    yawit "Testing input system!";
-
-    ngutana age;
-    ngutana height;
-    ngutana name;
-    ngutana initial;
-
-    yawit "Values after input:";
-    yawit "Age ➜", age;
-    yawit "Height ➜", height;
-    yawit "Name ➜", name;
-    yawit "Initial ➜", initial;
 
     age etoNaLods 10;
     yawit age dagdag 20;

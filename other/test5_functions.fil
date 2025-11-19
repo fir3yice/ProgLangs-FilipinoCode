@@ -3,6 +3,11 @@ buhat add(bilang a, bilang b) : bilang {
     uwianNa a dagdag b;
 }
 
+buhat add(bilang a, bilang b) : bilang {
+    test();
+    uwianNa a dagdag b;
+}
+
 buhat printAndReturn(bilang x) : bilang {
     yawit "Inside function, x =", x;
     uwianNa x dagdag 5;

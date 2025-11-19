@@ -28,7 +28,7 @@ def print_tree(node, prefix="", is_last=True):
 
 # sample1_basic sample2_medium sample3_complex
 
-input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\sample3_complex.fil", encoding="utf-8")
+input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\test1_iomath.fil", encoding="utf-8")
 lexer = FilipinoCodeLexer(input_stream)
 tokens = CommonTokenStream(lexer)
 parser = FilipinoCodeParser(tokens)

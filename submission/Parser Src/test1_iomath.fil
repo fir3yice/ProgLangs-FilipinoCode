@@ -4,6 +4,7 @@ buhat main() {
     lods dobols height;
     lods tsismis name;
     lods emoji initial;
+    lods throw test;
 
     yawit "Testing input system!";
 

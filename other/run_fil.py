@@ -28,14 +28,23 @@ def print_tree(node, prefix="", is_last=True):
 
 # sample1_basic sample2_medium sample3_complex
 
-input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\test6_use.fil", encoding="utf-8")
+# test_00.fil
+
+input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\test5_functions.fil", encoding="utf-8")
 lexer = FilipinoCodeLexer(input_stream)
 tokens = CommonTokenStream(lexer)
 parser = FilipinoCodeParser(tokens)
 tree = parser.program()
 
-print_tree(tree)
-
+#print_tree(tree)
 
 interpreter = FilipinoInterpreter()
-#interpreter.visit(tree)
+interpreter.visit(tree)
+
+
+# on/off switch for verbose dumping of the processing that's happening within the interpreter
+# so like a debugger kinda thing. 
+# antlr has a feature like that already, just need to fix it together/implement with the project
+# what kinda messaging tho? like everything? so like "read an 'if' at line xx" 
+# basta for easier tracing. just look into the antlr one for now since we using antlr anyway
+# THIS COUNTS AS AUXILLIARY FEATURES
