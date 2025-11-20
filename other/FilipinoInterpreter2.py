@@ -5,7 +5,7 @@ from account import Account
 
 
 ## TODO: add true and false LOL
-## TODO: final checking
+## TODO: final checking/edge case stuff
 
 ## TODO: error handling improvements (fixed maybe? remove the one in the gramar)
 ## TODO: increment and decrement, += -= etc? probably will only implement the ++ and -- since that's what's in the grammar

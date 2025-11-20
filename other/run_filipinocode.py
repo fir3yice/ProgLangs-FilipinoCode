@@ -10,7 +10,10 @@ class VerboseErrorListener(ErrorListener):
         self.errors = []
 
     def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
-        error_msg = f"[Syntax Error] line {line}:{column} -> {msg}"
+        if "missing \';\' at" in msg:
+            error_msg = f"[Warning] line {line}:{column} -> {msg}"
+        else:
+            error_msg = f"[Syntax Error] line {line}:{column} -> {msg}"
         self.errors.append(error_msg)
         print(error_msg)
 
@@ -59,14 +62,12 @@ def main():
 
     args.interactive = False
 
-    # Read file
     try:
         input_stream = FileStream(args.file, encoding="utf-8")
     except FileNotFoundError:
         print(f"[Error] File '{args.file}' not found.")
         return
 
-    # Lexer & Parser
     lexer = FilipinoCodeLexer(input_stream)
     tokens = CommonTokenStream(lexer)
     parser_obj = FilipinoCodeParser(tokens)
@@ -78,21 +79,16 @@ def main():
         parser_obj.setTrace(True)
 
     tree = parser_obj.program()
-
-    # Optionally print parse tree
     if args.print_tree:
         print_tree(tree)
 
-    # Interpreter
     interpreter = FilipinoInterpreter(args.debug_i)
-    #interpreter.verbose = args.debug  # your interpreter should handle this flag
     try:
         interpreter.visit(tree)
     except Exception as e:
         print(f"[Runtime Error] {e}")
         return
 
-    # Interactive mode
     if args.interactive:
         print("\n[Interactive Mode] Type commands or 'exit' to quit.")
         while True:

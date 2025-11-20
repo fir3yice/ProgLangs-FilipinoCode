@@ -11,6 +11,8 @@ class VerboseErrorListener(ErrorListener):
         self.errors = []
 
     def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
+        if "missing \';\' at" in msg:
+            print("lol")
         error_msg = f"[Syntax Error] line {line}:{column} -> {msg}"
         self.errors.append(error_msg)
         print(error_msg)
