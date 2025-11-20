@@ -223,21 +223,39 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         return result
 
     def visitArith_factor(self, ctx: FilipinoCodeParser.Arith_factorContext):
-        if ctx.funccall():
+        
+        if not hasattr(ctx, "kind"):
+            if ctx.funccall():
+                ctx.kind = "funccall"
+            elif ctx.LPAREN():
+                ctx.kind = "paren"
+            elif ctx.value():
+                ctx.kind = "value"
+            elif ctx.IDENTIFIER():
+                ctx.kind = "identifier"
+
+        if ctx.kind == "funccall":
             return self.visit(ctx.funccall())
-        if ctx.LPAREN():
+        elif ctx.kind == "paren":
             return self.visit(ctx.expression())
-        if ctx.value():
+        elif ctx.kind == "value":
             return self.visit(ctx.value())
-            
-        if ctx.IDENTIFIER():
+        elif ctx.kind == "identifier":
+
+        # if ctx.funccall():
+        #     return self.visit(ctx.funccall())
+        # if ctx.LPAREN():
+        #     return self.visit(ctx.expression())
+        # if ctx.value():
+        #     return self.visit(ctx.value())
+        # if ctx.IDENTIFIER():
             name = ctx.IDENTIFIER().getText()
             if getattr(self, 'current_func', None) and self.current_func and self.current_func._local_cache and name in self.current_func._local_cache:
                 #print("jere")
                 return self.current_func._local_cache[name].value
             
-            # if hasattr(self, '_local_cache') and name in self._local_cache:
-            #     print("here")
+            # if getattr(self, '_local_cache', None) and name in self._local_cache:
+            #     print("using cache")
             #     return self._local_cache[name]
 
             
