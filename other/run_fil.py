@@ -30,7 +30,7 @@ def print_tree(node, prefix="", is_last=True):
 
 # test_00.fil
 
-input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\test5_functions.fil", encoding="utf-8")
+input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\test3_if_else.fil", encoding="utf-8")
 lexer = FilipinoCodeLexer(input_stream)
 tokens = CommonTokenStream(lexer)
 parser = FilipinoCodeParser(tokens)
@@ -39,7 +39,11 @@ tree = parser.program()
 #print_tree(tree)
 
 interpreter = FilipinoInterpreter()
-interpreter.visit(tree)
+try:
+    interpreter.visit(tree)
+except Exception as e:
+    print(f"{e}")
+
 
 
 # on/off switch for verbose dumping of the processing that's happening within the interpreter

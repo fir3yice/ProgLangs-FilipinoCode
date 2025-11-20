@@ -4,7 +4,7 @@ buhat main() {
     yawit "Enter your score:";
     ngutana score;
 
-    ediwow (score dagdag 10 saktoDako 90) {
+    ediwow (score saktoDako 90 dagdag 10 ) {
         yawit "Excellent!";
     } ediAno (score saktoDako 75) {
         yawit "Good job!";
@@ -16,4 +16,8 @@ buhat main() {
     }
 
     yawit score;
+
+    ediwow(score masDako 90 uban (90 masDako 1)){
+        yawit "here";
+    }
 }

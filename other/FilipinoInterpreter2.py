@@ -3,13 +3,11 @@ from FilipinoCodeParser import FilipinoCodeParser
 from symbol_table import SymbolTable
 from account import Account
 
-
-## TODO: functions and subroutines - done probably
-## TODO: uselists - done probably -- need to doublecheck
 ## TODO: error handling improvements -- undefined statements
 ## TODO: Add optimization techniques (1 or 2. can be anywhere, like the syntax tree)
 ## TODO: the debugging stuff
 ## TODO: maybe make like a gui or fix the arguments so that it takes the input file as like --i file.fil 
+## TODO: add true and false LOL
 
 ## TODO: increment and decrement, += -= etc? probably will only implement the ++ and -- since that's what's in the grammar
 ## TODO: Domain layer double check everything or add complexity idk
@@ -150,11 +148,21 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         result = self.visit(terms[0])
         for i in range(1, len(terms)):
             op = ctx.getChild(2 * i - 1).getText()
+            # right = self.visit(terms[i])
+            # if op in ("uban", "&&"):
+            #     result = result and right
+            # elif op in ("maskinUnsa", "||"):
+            #     result = result or right
+            
+            if op in ("uban","&&") and not result: 
+                print("here1")
+                return False  # no need to evaluate right side
+            if op in ("maskinUnsa","||") and result: 
+                print("here2")
+                return True
             right = self.visit(terms[i])
-            if op in ("uban", "&&"):
-                result = result and right
-            elif op in ("maskinUnsa", "||"):
-                result = result or right
+            result = result and right if op in ("uban","&&") else result or right
+
         return result
 
     def visitBool_term(self, ctx: FilipinoCodeParser.Bool_termContext):
