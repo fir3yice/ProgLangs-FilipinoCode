@@ -75,7 +75,8 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             raise TypeError(f"[Type Error] Datatype does not exist for '{name}'.")
             
         self.global_scope.define(name, dtype, value, is_const=True)
-        
+        if(self.verbose):
+            print(f"[Debug] Constant '{name}' created with datatype '{dtype}'")
         return None
 
 
@@ -97,6 +98,9 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
                 self.global_scope.define(name, data_type, Account(name), is_const=False)
             else:
                 self.global_scope.define(name, data_type, default_val, is_const=False)
+
+            if(self.verbose):
+                print(f"[Debug] Variable '{name}' created with datatype '{data_type}'")
         return None
 
     # Assignment
@@ -137,6 +141,8 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
                 raise TypeError(f"[Type Error] Expected single character for '{name}'")
 
         symbol.value = value
+        if(self.verbose):
+            print(f"[Debug] Variable '{name}' value changed to '{value}'")
         return None
 
     def visitPrint_statement(self, ctx: FilipinoCodeParser.Print_statementContext):
@@ -349,6 +355,8 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
 
     # Control flow
     def visitIf_statement(self, ctx: FilipinoCodeParser.If_statementContext):
+        if(self.verbose):
+            print(f"[Debug] Entering a conditional block")
         main_condition = self.visit(ctx.expression(0))
         if main_condition:
             self.visit(ctx.block(0))
@@ -383,6 +391,8 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
     def visitWhile_statement(self, ctx):
         self._local_cache = {}
         condition = self.visit(ctx.expression())
+        if(self.verbose):
+            print(f"[Debug] Entering a loop")
         while condition:
             try:
                 self.visit(ctx.block())
@@ -392,15 +402,20 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             except ContinueSignal:
                 continue
         self._local_cache = None
+        if(self.verbose):
+            print(f"[Debug] Exited the loop")   
         return None
 
 
     def visitFor_statement(self, ctx: FilipinoCodeParser.For_statementContext):
         # By definition the for statement can be empty
         # Also note that the identifier hsa to be declared outside of the for()
+        
         if ctx.assignment_statement(0):  
             self.visit(ctx.assignment_statement(0))
-        
+
+        if(self.verbose):
+            print(f"[Debug] Entering a loop")
         condition = True
         if ctx.expression():
             condition = self.visit(ctx.expression())
@@ -422,6 +437,8 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
                 condition = True
                 # Since an empty conditional for loop is just a while true
                 # TIL.
+        if(self.verbose):
+            print(f"[Debug] Exited the loop")    
         return None
 
 
@@ -473,15 +490,17 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             name = name, params = parameters, return_type = return_type,
             ctx = ctx.function_content()
         )
-        
-        print (f"Function '{name}' declared with return_type '{return_type}'")
-        print (ctx.function_content())
+        if(self.verbose):
+            print(f"Function '{name}' declared with return_type '{return_type}'") 
+        #print (f"Function '{name}' declared with return_type '{return_type}'")
+        #print (ctx.function_content())
 
         return None
         
     def visitFunccall(self, ctx):
         name = ctx.IDENTIFIER().getText()
-        #print(f"Function '{name}' was called.")
+        if(self.verbose):
+            print(f"Function '{name}' call attempted") 
         if name not in self.functions:
             raise NameError(f"[Function Error] Function '{name}' not found. Did you misspell it?")
         func = self.functions[name]
@@ -523,6 +542,8 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         self.current_func = None
 
         self.global_scope = parent_scope
+        if(self.verbose):
+            print(f"Function '{name}' done") 
         return result
     
     def visitUse_list(self, ctx: FilipinoCodeParser.Use_listContext):
@@ -565,11 +586,12 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         tokens = CommonTokenStream(lexer)
         parser = FilipinoCodeParser(tokens)
         tree = parser.module()
-
-        print(f"[Use] Loading module '{module_file}'")
+        if(self.verbose):
+            #print(f"Function '{name}' done") 
+            print(f"[Use] Loading module '{module_file}'")
         self.visit(tree)
-
-        print(f"[Use] Made '{symbol_name}' from module '{module_file}' available")
+        if(self.verbose):
+            print(f"[Use] Made '{symbol_name}' from module '{module_file}' available")
         return None
 
 
