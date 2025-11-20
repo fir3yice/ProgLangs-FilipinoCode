@@ -4,7 +4,6 @@ from symbol_table import SymbolTable
 from account import Account
 
 ## TODO: error handling improvements -- undefined statements
-## TODO: Add optimization techniques (1 or 2. can be anywhere, like the syntax tree)
 ## TODO: the debugging stuff
 ## TODO: maybe make like a gui or fix the arguments so that it takes the input file as like --i file.fil 
 ## TODO: add true and false LOL
@@ -13,16 +12,24 @@ from account import Account
 ## TODO: Domain layer double check everything or add complexity idk
 
 
+## optimization techniques
+        #1. adding caching system for functions
+        #2. lazy condition checking
+        #3. added a 'kind' keyword per context, so each check is cheaper in visitArith_factor
+    # maybe convert it to AST but that is a LOT of work and I don't think there's enough time.
+
 allowed_types = ["bilang", "dobols", "tsismis", "emoji", "account"]
 
 # Visitor extends parsetree
 # Interpreter class because re-writing things into regenerated visitors is not fun :DDDDD (definitely didn't experience that :DDDDD )
 class FilipinoInterpreter(FilipinoCodeVisitor):
-    def __init__(self):
+    def __init__(self, verbose):
         super().__init__()
         self.global_scope = SymbolTable()
         self.functions = {}
         self.imported_modules = {}
+        self.verbose = verbose
+        print("verbose is:", self.verbose)
     
     
     def default_value_for_type(self, dtype):
@@ -68,6 +75,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             raise TypeError(f"[Type Error] Datatype does not exist for '{name}'.")
             
         self.global_scope.define(name, dtype, value, is_const=True)
+        
         return None
 
 
@@ -223,7 +231,6 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         return result
 
     def visitArith_factor(self, ctx: FilipinoCodeParser.Arith_factorContext):
-        
         if not hasattr(ctx, "kind"):
             if ctx.funccall():
                 ctx.kind = "funccall"
