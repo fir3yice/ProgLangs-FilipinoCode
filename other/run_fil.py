@@ -3,6 +3,17 @@ from antlr4 import *
 from FilipinoCodeLexer import FilipinoCodeLexer
 from FilipinoCodeParser import FilipinoCodeParser
 from FilipinoInterpreter2 import FilipinoInterpreter
+from antlr4.error.ErrorListener import ErrorListener
+
+class VerboseErrorListener(ErrorListener):
+    def __init__(self):
+        super().__init__()
+        self.errors = []
+
+    def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
+        error_msg = f"[Syntax Error] line {line}:{column} -> {msg}"
+        self.errors.append(error_msg)
+        print(error_msg)
 
 def print_tree(node, prefix="", is_last=True):
     connector = "└── " if is_last else "├── "
@@ -31,15 +42,18 @@ def print_tree(node, prefix="", is_last=True):
 
 # test_00.fil
 
-input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\test4_while.fil", encoding="utf-8")
+input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\test0_scoping.fil", encoding="utf-8")
 lexer = FilipinoCodeLexer(input_stream)
 tokens = CommonTokenStream(lexer)
 parser = FilipinoCodeParser(tokens)
+parser.removeErrorListeners()
+listener = VerboseErrorListener()
+parser.addErrorListener(listener)
 tree = parser.program()
 
 #print_tree(tree)
 
-interpreter = FilipinoInterpreter()
+interpreter = FilipinoInterpreter(verbose=False)
 try:
     interpreter.visit(tree)
 except Exception as e:
