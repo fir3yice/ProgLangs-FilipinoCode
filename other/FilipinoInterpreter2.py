@@ -223,15 +223,24 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         return result
 
     def visitArith_factor(self, ctx: FilipinoCodeParser.Arith_factorContext):
-        
         if ctx.funccall():
             return self.visit(ctx.funccall())
         if ctx.LPAREN():
             return self.visit(ctx.expression())
         if ctx.value():
             return self.visit(ctx.value())
+            
         if ctx.IDENTIFIER():
             name = ctx.IDENTIFIER().getText()
+            if getattr(self, 'current_func', None) and self.current_func and self.current_func._local_cache and name in self.current_func._local_cache:
+                #print("jere")
+                return self.current_func._local_cache[name].value
+            
+            # if hasattr(self, '_local_cache') and name in self._local_cache:
+            #     print("here")
+            #     return self._local_cache[name]
+
+            
             symbol = self.global_scope.resolve(name)
             if symbol is None:
                 print(f"[Runtime Error] Variable '{name}' not defined.")
@@ -334,9 +343,21 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         return None
 
     
-    def visitWhile_statement(self, ctx: FilipinoCodeParser.While_statementContext):
+    # def visitWhile_statement(self, ctx: FilipinoCodeParser.While_statementContext):
+    #     condition = self.visit(ctx.expression())
+    #     # could simplify it but eh
+    #     while condition:
+    #         try:
+    #             self.visit(ctx.block())
+    #             condition = self.visit(ctx.expression())
+    #         except BreakSignal:
+    #             break
+    #         except ContinueSignal:
+    #             continue
+    #     return None
+    def visitWhile_statement(self, ctx):
+        self._local_cache = {}
         condition = self.visit(ctx.expression())
-        # could simplify it but eh
         while condition:
             try:
                 self.visit(ctx.block())
@@ -345,8 +366,9 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
                 break
             except ContinueSignal:
                 continue
+        self._local_cache = None
         return None
-        
+
 
     def visitFor_statement(self, ctx: FilipinoCodeParser.For_statementContext):
         # By definition the for statement can be empty
@@ -431,9 +453,6 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         print (ctx.function_content())
 
         return None
-    
-    # def visitFunccall_statement(self, ctx: FilipinoCodeParser.FunccallContext):
-    #     func_name = ctx.IDENTIFIER().getText()
         
     def visitFunccall(self, ctx):
         name = ctx.IDENTIFIER().getText()
@@ -452,16 +471,31 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         parent_scope = self.global_scope
         self.global_scope = local_scope
 
+        # for (dtype, param_name), arg in zip(func.params, parameters):
+        #     value = self.visit(arg)
+        #     local_scope.define(param_name, dtype, value, False)
+        
+
+        func.local_cache = {}
         for (dtype, param_name), arg in zip(func.params, parameters):
             value = self.visit(arg)
             local_scope.define(param_name, dtype, value, False)
+            func._local_cache[param_name] = local_scope.resolve(param_name)
+
         
         #print (f"Function '{name}' entered.")
         result = None
+        # try:
+        #     result = self.visit(func.ctx)
+        # except ReturnSignal as ret:
+        #     result = ret.value
+
+        self.current_func = func
         try:
             result = self.visit(func.ctx)
         except ReturnSignal as ret:
             result = ret.value
+        self.current_func = None
 
         self.global_scope = parent_scope
         return result
@@ -588,3 +622,4 @@ class FuncDef():
         self.params = params
         self.return_type = return_type
         self.ctx = ctx       
+        self._local_cache = {}
