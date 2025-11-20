@@ -4,21 +4,21 @@ from symbol_table import SymbolTable
 from account import Account
 
 
-## TODO: add true and false LOL
-## TODO: final checking/edge case stuff
+## TODO: Add true and false LOL
+## TODO: Final checking/edge case stuff
 
-## TODO: error handling improvements (fixed maybe? remove the one in the gramar)
-## TODO: increment and decrement, += -= etc? probably will only implement the ++ and -- since that's what's in the grammar
+## TODO: Error handling improvements (fixed maybe? remove the one in the grammar)
+## TODO: Increment and Decrement, += -= etc? probably will only implement the ++ and -- since that's what's in the grammar
 ## TODO: Domain layer double check everything or add complexity idk
 
 
-## optimization techniques
+## Optimization Techniques
         #1. adding caching system for functions
         #2. lazy condition checking
         #3. added a 'kind' keyword per context, so each check is cheaper in visitArith_factor
     # maybe convert it to AST but that is a LOT of work and I don't think there's enough time.
 
-## debugger
+## Debugger
         #1. parser level
         #2. interpreter level
         #3. print the parse tree
