@@ -50,6 +50,10 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
     def visitConst_statement(self, ctx: FilipinoCodeParser.Const_statementContext):
         dtype = ctx.data_type().getText()
         name = ctx.IDENTIFIER().getText()
+        #print(ctx.expression())
+        expr_ctx = ctx.expression()
+        if expr_ctx is None or expr_ctx.getChildCount() == 0 or expr_ctx.getText().strip() == "":
+            raise SyntaxError(f"[Syntax Error] Missing value for constant '{name}'.")
         value = self.visit(ctx.expression())
 
         if name in self.global_scope.symbols:
@@ -113,6 +117,9 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
 
     # Assignment
     def visitAssignment_statement(self, ctx: FilipinoCodeParser.Assignment_statementContext):
+        #print(ctx.expression())
+        if ctx.expression() is None:
+            raise RuntimeError(f"Missing value in variable assignment at line {ctx.start.line}")
         name = ctx.IDENTIFIER().getText()
         value = self.visit(ctx.expression())
 
@@ -253,8 +260,12 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
 
     def visitArith_factor(self, ctx: FilipinoCodeParser.Arith_factorContext):
         if ctx.getChildCount() == 2:
+            #print("hhh")
             op = ctx.getChild(0).getText()
             inner = ctx.getChild(1)
+            if inner.getText().startswith("-"):
+                #print("here")
+                pass  
             value = self.visit(inner)
 
             if op == "-":
@@ -265,6 +276,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
                 if not isinstance(value, (int, float)):
                     raise TypeError(f"[Type Error] Cannot apply unary '+' to '{value}'.")
                 return +value
+
         if not hasattr(ctx, "kind"):
             if ctx.funccall():
                 ctx.kind = "funccall"
@@ -282,7 +294,6 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         elif ctx.kind == "value":
             return self.visit(ctx.value())
         elif ctx.kind == "identifier":
-
         # if ctx.funccall():
         #     return self.visit(ctx.funccall())
         # if ctx.LPAREN():
@@ -314,9 +325,9 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         elif ctx.FLOAT():
             return float(ctx.FLOAT().getText())
         elif ctx.NEG_INTEGER():
-            return int(ctx.NEG_INTEGER().getText())*-1
-        elif ctx.NEG_FLOAT:
-            return float(ctx.NEG_FLOAT().getText())*-1
+            return int(ctx.NEG_INTEGER().getText())
+        elif ctx.NEG_FLOAT():
+            return float(ctx.NEG_FLOAT().getText())
         elif ctx.STRING():
             return ctx.STRING().getText().strip('"')
         elif ctx.CHAR():

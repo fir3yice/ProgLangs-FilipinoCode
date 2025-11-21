@@ -27,20 +27,20 @@ def serializedATN():
         1,13,1,14,1,14,1,14,5,14,203,8,14,10,14,12,14,206,9,14,1,15,3,15,
         209,8,15,1,15,1,15,1,16,1,16,1,16,3,16,216,8,16,1,17,1,17,1,17,5,
         17,221,8,17,10,17,12,17,224,9,17,1,18,1,18,1,18,5,18,229,8,18,10,
-        18,12,18,232,9,18,1,19,1,19,1,19,1,19,1,19,1,19,1,19,1,19,1,19,1,
-        19,3,19,244,8,19,1,19,1,19,1,19,1,19,1,19,1,19,3,19,252,8,19,1,20,
-        1,20,1,21,1,21,1,21,1,21,1,22,1,22,1,23,1,23,1,23,5,23,265,8,23,
-        10,23,12,23,268,9,23,1,24,5,24,271,8,24,10,24,12,24,274,9,24,1,25,
-        1,25,1,25,1,25,1,26,1,26,1,26,3,26,283,8,26,1,26,1,26,1,26,3,26,
-        288,8,26,1,27,1,27,1,27,3,27,293,8,27,1,27,1,27,1,28,1,28,1,29,1,
-        29,1,29,5,29,302,8,29,10,29,12,29,305,9,29,1,30,1,30,1,30,1,31,1,
-        31,1,31,5,31,313,8,31,10,31,12,31,316,9,31,1,32,1,32,3,32,320,8,
-        32,1,33,1,33,5,33,324,8,33,10,33,12,33,327,9,33,1,33,1,33,1,34,1,
-        34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,5,34,342,8,34,10,
-        34,12,34,345,9,34,1,34,1,34,3,34,349,8,34,1,35,1,35,1,35,1,35,1,
-        35,1,35,1,36,1,36,1,36,1,36,1,36,1,36,3,36,363,8,36,1,36,3,36,366,
-        8,36,1,36,1,36,3,36,370,8,36,1,36,1,36,1,36,1,37,1,37,1,37,1,37,
-        5,37,379,8,37,10,37,12,37,382,9,37,1,38,1,38,1,38,1,39,5,39,388,
+        18,12,18,232,9,18,1,19,1,19,1,19,1,19,1,19,1,19,3,19,240,8,19,1,
+        19,1,19,1,19,1,19,1,19,1,19,1,19,1,19,1,19,1,19,3,19,252,8,19,1,
+        20,1,20,1,21,1,21,1,21,1,21,1,22,1,22,1,23,1,23,1,23,5,23,265,8,
+        23,10,23,12,23,268,9,23,1,24,5,24,271,8,24,10,24,12,24,274,9,24,
+        1,25,1,25,1,25,1,25,1,26,1,26,1,26,3,26,283,8,26,1,26,1,26,1,26,
+        3,26,288,8,26,1,27,1,27,1,27,3,27,293,8,27,1,27,1,27,1,28,1,28,1,
+        29,1,29,1,29,5,29,302,8,29,10,29,12,29,305,9,29,1,30,1,30,1,30,1,
+        31,1,31,1,31,5,31,313,8,31,10,31,12,31,316,9,31,1,32,1,32,3,32,320,
+        8,32,1,33,1,33,5,33,324,8,33,10,33,12,33,327,9,33,1,33,1,33,1,34,
+        1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,5,34,342,8,34,
+        10,34,12,34,345,9,34,1,34,1,34,3,34,349,8,34,1,35,1,35,1,35,1,35,
+        1,35,1,35,1,36,1,36,1,36,1,36,1,36,1,36,3,36,363,8,36,1,36,3,36,
+        366,8,36,1,36,1,36,3,36,370,8,36,1,36,1,36,1,36,1,37,1,37,1,37,1,
+        37,5,37,379,8,37,10,37,12,37,382,9,37,1,38,1,38,1,38,1,39,5,39,388,
         8,39,10,39,12,39,391,9,39,1,40,1,40,1,40,1,40,1,40,1,40,1,40,1,41,
         5,41,401,8,41,10,41,12,41,404,9,41,1,42,1,42,1,42,1,42,1,42,1,42,
         1,42,0,0,43,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,
@@ -100,13 +100,13 @@ def serializedATN():
         220,1,0,0,0,222,223,1,0,0,0,223,35,1,0,0,0,224,222,1,0,0,0,225,230,
         3,38,19,0,226,227,7,3,0,0,227,229,3,38,19,0,228,226,1,0,0,0,229,
         232,1,0,0,0,230,228,1,0,0,0,230,231,1,0,0,0,231,37,1,0,0,0,232,230,
-        1,0,0,0,233,234,5,1,0,0,234,252,3,38,19,0,235,236,5,2,0,0,236,252,
-        3,38,19,0,237,238,5,43,0,0,238,252,5,59,0,0,239,240,5,44,0,0,240,
-        252,5,59,0,0,241,243,5,59,0,0,242,244,7,4,0,0,243,242,1,0,0,0,243,
-        244,1,0,0,0,244,252,1,0,0,0,245,252,3,54,27,0,246,247,5,53,0,0,247,
-        248,3,26,13,0,248,249,5,54,0,0,249,252,1,0,0,0,250,252,3,40,20,0,
-        251,233,1,0,0,0,251,235,1,0,0,0,251,237,1,0,0,0,251,239,1,0,0,0,
-        251,241,1,0,0,0,251,245,1,0,0,0,251,246,1,0,0,0,251,250,1,0,0,0,
+        1,0,0,0,233,234,5,43,0,0,234,252,5,59,0,0,235,236,5,44,0,0,236,252,
+        5,59,0,0,237,239,5,59,0,0,238,240,7,4,0,0,239,238,1,0,0,0,239,240,
+        1,0,0,0,240,252,1,0,0,0,241,252,3,54,27,0,242,243,5,53,0,0,243,244,
+        3,26,13,0,244,245,5,54,0,0,245,252,1,0,0,0,246,252,3,40,20,0,247,
+        248,5,1,0,0,248,252,3,38,19,0,249,250,5,2,0,0,250,252,3,38,19,0,
+        251,233,1,0,0,0,251,235,1,0,0,0,251,237,1,0,0,0,251,241,1,0,0,0,
+        251,242,1,0,0,0,251,246,1,0,0,0,251,247,1,0,0,0,251,249,1,0,0,0,
         252,39,1,0,0,0,253,254,7,5,0,0,254,41,1,0,0,0,255,256,5,8,0,0,256,
         257,3,44,22,0,257,258,3,46,23,0,258,43,1,0,0,0,259,260,7,6,0,0,260,
         45,1,0,0,0,261,266,5,59,0,0,262,263,5,58,0,0,263,265,5,59,0,0,264,
@@ -151,7 +151,7 @@ def serializedATN():
         401,3,84,42,0,400,399,1,0,0,0,401,404,1,0,0,0,402,400,1,0,0,0,402,
         403,1,0,0,0,403,83,1,0,0,0,404,402,1,0,0,0,405,406,5,12,0,0,406,
         407,5,59,0,0,407,408,5,4,0,0,408,409,5,59,0,0,409,410,5,57,0,0,410,
-        85,1,0,0,0,31,87,90,93,99,102,153,195,204,208,215,222,230,243,251,
+        85,1,0,0,0,31,87,90,93,99,102,153,195,204,208,215,222,230,239,251,
         266,272,282,287,292,303,314,319,325,343,348,362,365,369,380,389,
         402
     ]
@@ -1818,10 +1818,6 @@ class FilipinoCodeParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def arith_factor(self):
-            return self.getTypedRuleContext(FilipinoCodeParser.Arith_factorContext,0)
-
-
         def INCREMENT(self):
             return self.getToken(FilipinoCodeParser.INCREMENT, 0)
 
@@ -1847,6 +1843,10 @@ class FilipinoCodeParser ( Parser ):
 
         def value(self):
             return self.getTypedRuleContext(FilipinoCodeParser.ValueContext,0)
+
+
+        def arith_factor(self):
+            return self.getTypedRuleContext(FilipinoCodeParser.Arith_factorContext,0)
 
 
         def getRuleIndex(self):
@@ -1881,44 +1881,28 @@ class FilipinoCodeParser ( Parser ):
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 233
-                self.match(FilipinoCodeParser.T__0)
+                self.match(FilipinoCodeParser.INCREMENT)
                 self.state = 234
-                self.arith_factor()
+                self.match(FilipinoCodeParser.IDENTIFIER)
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 235
-                self.match(FilipinoCodeParser.T__1)
+                self.match(FilipinoCodeParser.DECREMENT)
                 self.state = 236
-                self.arith_factor()
+                self.match(FilipinoCodeParser.IDENTIFIER)
                 pass
 
             elif la_ == 3:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 237
-                self.match(FilipinoCodeParser.INCREMENT)
-                self.state = 238
                 self.match(FilipinoCodeParser.IDENTIFIER)
-                pass
-
-            elif la_ == 4:
-                self.enterOuterAlt(localctx, 4)
                 self.state = 239
-                self.match(FilipinoCodeParser.DECREMENT)
-                self.state = 240
-                self.match(FilipinoCodeParser.IDENTIFIER)
-                pass
-
-            elif la_ == 5:
-                self.enterOuterAlt(localctx, 5)
-                self.state = 241
-                self.match(FilipinoCodeParser.IDENTIFIER)
-                self.state = 243
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==43 or _la==44:
-                    self.state = 242
+                    self.state = 238
                     _la = self._input.LA(1)
                     if not(_la==43 or _la==44):
                         self._errHandler.recoverInline(self)
@@ -1929,26 +1913,42 @@ class FilipinoCodeParser ( Parser ):
 
                 pass
 
+            elif la_ == 4:
+                self.enterOuterAlt(localctx, 4)
+                self.state = 241
+                self.funccall()
+                pass
+
+            elif la_ == 5:
+                self.enterOuterAlt(localctx, 5)
+                self.state = 242
+                self.match(FilipinoCodeParser.LPAREN)
+                self.state = 243
+                self.expression()
+                self.state = 244
+                self.match(FilipinoCodeParser.RPAREN)
+                pass
+
             elif la_ == 6:
                 self.enterOuterAlt(localctx, 6)
-                self.state = 245
-                self.funccall()
+                self.state = 246
+                self.value()
                 pass
 
             elif la_ == 7:
                 self.enterOuterAlt(localctx, 7)
-                self.state = 246
-                self.match(FilipinoCodeParser.LPAREN)
                 self.state = 247
-                self.expression()
+                self.match(FilipinoCodeParser.T__0)
                 self.state = 248
-                self.match(FilipinoCodeParser.RPAREN)
+                self.arith_factor()
                 pass
 
             elif la_ == 8:
                 self.enterOuterAlt(localctx, 8)
+                self.state = 249
+                self.match(FilipinoCodeParser.T__1)
                 self.state = 250
-                self.value()
+                self.arith_factor()
                 pass
 
 
@@ -1968,17 +1968,17 @@ class FilipinoCodeParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def INTEGER(self):
-            return self.getToken(FilipinoCodeParser.INTEGER, 0)
-
-        def FLOAT(self):
-            return self.getToken(FilipinoCodeParser.FLOAT, 0)
-
         def NEG_INTEGER(self):
             return self.getToken(FilipinoCodeParser.NEG_INTEGER, 0)
 
         def NEG_FLOAT(self):
             return self.getToken(FilipinoCodeParser.NEG_FLOAT, 0)
+
+        def INTEGER(self):
+            return self.getToken(FilipinoCodeParser.INTEGER, 0)
+
+        def FLOAT(self):
+            return self.getToken(FilipinoCodeParser.FLOAT, 0)
 
         def STRING(self):
             return self.getToken(FilipinoCodeParser.STRING, 0)

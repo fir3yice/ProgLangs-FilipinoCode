@@ -96,22 +96,22 @@ arith_term
     ;
 
 arith_factor
-    : '-' arith_factor
-    | '+' arith_factor
-    | (INCREMENT IDENTIFIER)          
+    : (INCREMENT IDENTIFIER)          
     | (DECREMENT IDENTIFIER)           
     | IDENTIFIER (INCREMENT | DECREMENT)?
     | funccall
     | LPAREN expression RPAREN
     | value
+    | '-' arith_factor
+    | '+' arith_factor
     ;
 
 // Values, Identifiers, and similar
 value
-    : INTEGER
-    | FLOAT
-    | NEG_INTEGER
+    : NEG_INTEGER
     | NEG_FLOAT
+    | INTEGER
+    | FLOAT
     | STRING
     | CHAR
     | BOOLEAN_LITERAL
