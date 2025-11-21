@@ -10,7 +10,7 @@ else:
 
 def serializedATN():
     return [
-        4,1,67,412,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,69,412,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,
         2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,
         7,20,2,21,7,21,2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,2,26,7,26,
@@ -46,7 +46,7 @@ def serializedATN():
         1,42,0,0,43,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,
         38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,
         82,84,0,7,1,0,45,46,1,0,37,42,1,0,31,32,1,0,33,35,1,0,43,44,2,0,
-        27,28,60,63,1,0,21,26,421,0,87,1,0,0,0,2,99,1,0,0,0,4,106,1,0,0,
+        27,28,60,65,1,0,21,26,421,0,87,1,0,0,0,2,99,1,0,0,0,4,106,1,0,0,
         0,6,112,1,0,0,0,8,153,1,0,0,0,10,155,1,0,0,0,12,160,1,0,0,0,14,165,
         1,0,0,0,16,170,1,0,0,0,18,177,1,0,0,0,20,184,1,0,0,0,22,187,1,0,
         0,0,24,190,1,0,0,0,26,197,1,0,0,0,28,199,1,0,0,0,30,208,1,0,0,0,
@@ -190,8 +190,9 @@ class FilipinoCodeParser ( Parser ):
                       "GT", "LEQ", "GEQ", "INCREMENT", "DECREMENT", "AND", 
                       "OR", "NOT", "IF", "ELSE", "ELSE_IF", "WHILE", "FOR", 
                       "LPAREN", "RPAREN", "LBRACE", "RBRACE", "SEMICOLON", 
-                      "COMMA", "IDENTIFIER", "FLOAT", "INTEGER", "STRING", 
-                      "CHAR", "LINE_COMMENT", "BLOCK_COMMENT", "WS", "ERROR_CHAR" ]
+                      "COMMA", "IDENTIFIER", "FLOAT", "INTEGER", "NEG_INTEGER", 
+                      "NEG_FLOAT", "STRING", "CHAR", "LINE_COMMENT", "BLOCK_COMMENT", 
+                      "WS", "ERROR_CHAR" ]
 
     RULE_program = 0
     RULE_module = 1
@@ -313,12 +314,14 @@ class FilipinoCodeParser ( Parser ):
     IDENTIFIER=59
     FLOAT=60
     INTEGER=61
-    STRING=62
-    CHAR=63
-    LINE_COMMENT=64
-    BLOCK_COMMENT=65
-    WS=66
-    ERROR_CHAR=67
+    NEG_INTEGER=62
+    NEG_FLOAT=63
+    STRING=64
+    CHAR=65
+    LINE_COMMENT=66
+    BLOCK_COMMENT=67
+    WS=68
+    ERROR_CHAR=69
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -1971,6 +1974,12 @@ class FilipinoCodeParser ( Parser ):
         def FLOAT(self):
             return self.getToken(FilipinoCodeParser.FLOAT, 0)
 
+        def NEG_INTEGER(self):
+            return self.getToken(FilipinoCodeParser.NEG_INTEGER, 0)
+
+        def NEG_FLOAT(self):
+            return self.getToken(FilipinoCodeParser.NEG_FLOAT, 0)
+
         def STRING(self):
             return self.getToken(FilipinoCodeParser.STRING, 0)
 
@@ -2012,7 +2021,7 @@ class FilipinoCodeParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 253
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & -1152921504204193792) != 0)):
+            if not(((((_la - 27)) & ~0x3f) == 0 and ((1 << (_la - 27)) & 541165879299) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -2479,7 +2488,7 @@ class FilipinoCodeParser ( Parser ):
             self.state = 292
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & -567286426878607354) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & -567286426878607354) != 0) or _la==64 or _la==65:
                 self.state = 291
                 self.actual_parameter_list()
 
@@ -2782,7 +2791,7 @@ class FilipinoCodeParser ( Parser ):
             self.state = 319
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & -567286426878607354) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & -567286426878607354) != 0) or _la==64 or _la==65:
                 self.state = 318
                 self.expression()
 
@@ -3141,7 +3150,7 @@ class FilipinoCodeParser ( Parser ):
             self.state = 365
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & -567286426878607354) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & -567286426878607354) != 0) or _la==64 or _la==65:
                 self.state = 364
                 self.expression()
 

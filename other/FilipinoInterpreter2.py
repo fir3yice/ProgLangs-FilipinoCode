@@ -313,6 +313,10 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             return int(ctx.INTEGER().getText())
         elif ctx.FLOAT():
             return float(ctx.FLOAT().getText())
+        elif ctx.NEG_INTEGER():
+            return int(ctx.NEG_INTEGER().getText())*-1
+        elif ctx.NEG_FLOAT:
+            return float(ctx.NEG_FLOAT().getText())*-1
         elif ctx.STRING():
             return ctx.STRING().getText().strip('"')
         elif ctx.CHAR():

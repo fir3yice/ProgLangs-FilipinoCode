@@ -110,6 +110,8 @@ arith_factor
 value
     : INTEGER
     | FLOAT
+    | NEG_INTEGER
+    | NEG_FLOAT
     | STRING
     | CHAR
     | BOOLEAN_LITERAL
@@ -297,6 +299,8 @@ IDENTIFIER      : [a-zA-Z_][a-zA-Z0-9_]*;
 
 FLOAT           : [0-9]+ '.' [0-9]+ ([eE][+-]?[0-9]+)? ;
 INTEGER         : [0-9]+ ;
+NEG_INTEGER     : '-' [0-9]+;
+NEG_FLOAT       : '-' [0-9]+ '.' [0-9]+ ([eE][+-]?[0-9]+)?;
 STRING          : '"' ( ~["\\] | '\\' . )* '"' ;
 CHAR            : '\'' ( '\\' . | ~['\\] ) '\'' ;
 
