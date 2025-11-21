@@ -4,7 +4,9 @@ from symbol_table import SymbolTable
 from account import Account
 
 
-## TODO: Add true and false LOL
+## TODO: Add true and false LOL (probably done)
+## TODO: fix the and/or, currently, very buggy
+## TODO: negative numbers
 ## TODO: Final checking/edge case stuff
 
 ## TODO: Error handling improvements (fixed maybe? remove the one in the grammar)
@@ -23,7 +25,7 @@ from account import Account
         #2. interpreter level
         #3. print the parse tree
 
-allowed_types = ["bilang", "dobols", "tsismis", "emoji", "account"]
+allowed_types = ["bilang", "dobols", "tsismis", "emoji", "account", "bulyan"]
 
 # Visitor extends parsetree
 # Interpreter class because re-writing things into regenerated visitors is not fun :DDDDD (definitely didn't experience that :DDDDD )
@@ -42,6 +44,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         elif dtype == "dobols": return 0.0
         elif dtype == "tsismis": return ""
         elif dtype == "emoji": return '\0'
+        elif dtype == "bulyan": return False
         else: return None
 
     def visitConst_statement(self, ctx: FilipinoCodeParser.Const_statementContext):
@@ -64,17 +67,17 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
                 value = float(value)
             elif isinstance(value, str):
                 raise TypeError(f"[Type Error] Cannot assign string to float variable '{name}'")
-
         elif dtype == "tsismis":  
             if not isinstance(value, str):
                 raise TypeError(f"[Type Error] Expected string for '{name}', got {type(value).__name__}")
-
         elif dtype == "emoji":
             if not (isinstance(value, str) and len(value) == 1):
                 raise TypeError(f"[Type Error] Expected single character for '{name}'")
-            
         elif dtype == "account":
             raise TypeError(f"[Type Error] Account types cannot be made constant but '{name}' was declared as one.")
+        # elif dtype == "bulyan":
+        #     if not (isinstance(value, bool)):
+        #         raise 
         
         else:
             raise TypeError(f"[Type Error] Datatype does not exist for '{name}'.")
@@ -143,7 +146,14 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
 
         elif declared_type == "emoji":  # char
             if not (isinstance(value, str) and len(value) == 1):
-                raise TypeError(f"[Type Error] Expected single character for '{name}'")
+                raise TypeError(f"[Type Error] Expected single character for '{name}'")  
+                  
+        elif declared_type == "bulyan": # bool
+            if not isinstance(value, bool):
+                raise TypeError(f"[Type Error] Expected boolean for '{name}'")
+        elif declared_type == "account":
+
+            raise TypeError(f"[Type Error] Different commands expected for '{name}' with datatype account")
 
         symbol.value = value
         if(self.verbose):
@@ -174,10 +184,10 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             #     result = result or right
             
             if op in ("uban","&&") and not result: 
-                print("here1")
+                #print("here1")
                 return False  # no need to evaluate right side
             if op in ("maskinUnsa","||") and result: 
-                print("here2")
+                #print("here2")
                 return True
             right = self.visit(terms[i])
             result = result and right if op in ("uban","&&") else result or right
@@ -242,6 +252,19 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         return result
 
     def visitArith_factor(self, ctx: FilipinoCodeParser.Arith_factorContext):
+        if ctx.getChildCount() == 2:
+            op = ctx.getChild(0).getText()
+            inner = ctx.getChild(1)
+            value = self.visit(inner)
+
+            if op == "-":
+                if not isinstance(value, (int, float)):
+                    raise TypeError(f"[Type Error] Cannot apply unary '-' to '{value}'.")
+                return -value
+            elif op == "+":
+                if not isinstance(value, (int, float)):
+                    raise TypeError(f"[Type Error] Cannot apply unary '+' to '{value}'.")
+                return +value
         if not hasattr(ctx, "kind"):
             if ctx.funccall():
                 ctx.kind = "funccall"
@@ -295,7 +318,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         elif ctx.CHAR():
             return ctx.CHAR().getText().strip("'")
         elif ctx.BOOLEAN_LITERAL():
-            return ctx.BOOLEAN_LITERAL().getText() == "meron"
+            return ctx.BOOLEAN_LITERAL().getText() == "Totoo"
         elif ctx.NULL_LITERAL():
             return None
         return 0

@@ -96,7 +96,9 @@ arith_term
     ;
 
 arith_factor
-    : (INCREMENT IDENTIFIER)          
+    : '-' arith_factor
+    | '+' arith_factor
+    | (INCREMENT IDENTIFIER)          
     | (DECREMENT IDENTIFIER)           
     | IDENTIFIER (INCREMENT | DECREMENT)?
     | funccall
@@ -124,7 +126,7 @@ data_type
     | KW_CHAR
     | KW_STRING
     | KW_ACCOUNT
-    //KW_BOOLEAN
+    | KW_BOOLEAN
     ;
 
 identifier_list
@@ -243,10 +245,12 @@ KW_INT          : 'bilang';
 KW_DOUBLE       : 'dobols';
 KW_CHAR         : 'emoji';
 KW_STRING       : 'tsismis';
+KW_BOOLEAN      : 'bulyan';
+
 
 // Boolean and null
-BOOLEAN_LITERAL : 'meron' | 'alaws';
-NULL_LITERAL    : 'waley';
+BOOLEAN_LITERAL : 'Totoo' | 'Mali';
+NULL_LITERAL    : 'Waley';
 
 // I/O
 READ            : 'ngutana';

@@ -1,6 +1,6 @@
 forever bilang constantSample etoNaLods 100.1;
 buhat main() {
-    yawit "Basic Scoping Test"
+    yawit "Basic Scoping Test";
     yawit "constant:", constantSample;
     //constantSample etoNaLods 10; //raises a type error
     lods bilang constantSample1;
@@ -13,7 +13,7 @@ buhat main() {
     {
         lods bilang constantSample1;
         lods bilang x;
-        x etoNaLods "ooga";
+        x etoNaLods 1;
         yawit "Inside block:", x;
 
         {
@@ -24,4 +24,14 @@ buhat main() {
     }
 
     yawit "After block:", x;
+
+    lods bilang test_bool;
+    test_bool etoNaLods aa 33 asdasd;
+    yawit test_bool;
+
+    lods bilang score;
+    score etoNaLods 99;
+    ediwow(score masDako 90 uban test_bool){
+        yawit "truth!";
+    }
 }
