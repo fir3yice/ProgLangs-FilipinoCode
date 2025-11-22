@@ -4,26 +4,28 @@ from symbol_table import SymbolTable
 from account import Account
 
 
-## TODO: Add true and false LOL (probably done)
-## TODO: fix the and/or, currently, very buggy
-## TODO: negative numbers
+
+## TODO: negative numbers (hopefully fixed, maybe fix if there's a space so like - <value> vs -<value>)
+## TODO: blank assignment or incorrect assignment (the first is a raised error, the second is a warning only -> error recovery)
 ## TODO: Final checking/edge case stuff
 
-## TODO: Error handling improvements (fixed maybe? remove the one in the grammar)
+## TODO: Error handling improvements (fixed maybe? remove the one in the grammar later)
 ## TODO: Increment and Decrement, += -= etc? probably will only implement the ++ and -- since that's what's in the grammar
 ## TODO: Domain layer double check everything or add complexity idk
 
+## Conditionals
+    # Lazy evaluation will allow non-boolean expressions. I think that's kinda ok. 
 
 ## Optimization Techniques
         #1. adding caching system for functions
         #2. lazy condition checking
         #3. added a 'kind' keyword per context, so each check is cheaper in visitArith_factor
-    # maybe convert it to AST but that is a LOT of work and I don't think there's enough time.
+    # Maybe convert it to AST but that is a LOT of work and I don't think there's enough time.
 
 ## Debugger
-        #1. parser level
-        #2. interpreter level
-        #3. print the parse tree
+        #1. Parser level
+        #2. Interpreter level
+        #3. Print the parse tree
 
 allowed_types = ["bilang", "dobols", "tsismis", "emoji", "account", "bulyan"]
 
@@ -191,12 +193,14 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             #     result = result or right
             
             if op in ("uban","&&") and not result: 
-                #print("here1")
+                print("here1")
                 return False  # no need to evaluate right side
             if op in ("maskinUnsa","||") and result: 
-                #print("here2")
+                print("here2")
                 return True
             right = self.visit(terms[i])
+            if((result not in [False, True, 1, 0]) or right not in [False, True, 1, 0]):
+                raise ValueError(f"[Conditional Error] Conditionals can only take True or False. Got '{result}' and '{right}'")
             result = result and right if op in ("uban","&&") else result or right
 
         return result
@@ -211,7 +215,6 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         ariths = ctx.arith_expr()
         if len(ariths) == 1:
             return self.visit(ariths[0])
-
         left = self.visit(ariths[0])
         right = self.visit(ariths[1])
         op = ctx.getChild(1).getText()
@@ -401,6 +404,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         if(self.verbose):
             print(f"[Debug] Entering a conditional block")
         main_condition = self.visit(ctx.expression(0))
+        print(main_condition)
         if main_condition:
             self.visit(ctx.block(0))
             return None
@@ -500,7 +504,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
     
     # Scoping, based on blocks, which are based on '{ statements }'
     def visitBlock(self, ctx: FilipinoCodeParser.BlockContext):
-        # Create a new scope with current as parent
+        # New scope with current as parent
         previous_scope = self.global_scope
         self.global_scope = SymbolTable(parent=previous_scope)
 

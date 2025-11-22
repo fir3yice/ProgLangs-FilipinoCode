@@ -6,7 +6,7 @@ buhat main() {
 
     ediwow (score saktoDako 90 dagdag 10 ) {
         yawit "Excellent!";
-    } ediAno (score saktoDako 75) {
+    } ediAno (score saktoDako 75 maskinUnsa 10) {
         yawit "Good job!";
     } ediAno (score saktoDako 55) {
         yawit "Ok lang!";

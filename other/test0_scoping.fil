@@ -3,13 +3,13 @@ buhat main() {
 
     lods bilang x;
     x etoNaLods 0;
-    lods bilang test_bool;
-    test_bool etoNaLods 0;
+    lods bulyan test_bool;
+    test_bool etoNaLods Totoo;
     yawit test_bool;
 
     lods bilang score;
     score etoNaLods 99;
-    ediwow(score masDako 90 uban test_bool){
+    ediwow(score masDako 10 uban test_bool){
         yawit "truth!";
     }
 }
