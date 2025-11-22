@@ -14,7 +14,10 @@ from account import Account
 ## TODO: Domain layer double check everything or add complexity idk
 
 ## Conditionals
-    # Lazy evaluation will allow non-boolean expressions. I think that's kinda ok. 
+    # Lazy evaluation will allow non-boolean expressions, as long as the evaluation finishes before reaching it. I think that's kinda ok. 
+    # It looks like Py actually allows expression AND/OR expression, so things like bool AND/OR 10 would resolve as True. Only 0 is False.
+    # Java is stricter, allowing only bool AND/OR bool
+    # Current implementation is bool/0/1 AND/OR bool/0/1
 
 ## Optimization Techniques
         #1. adding caching system for functions
@@ -193,12 +196,13 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             #     result = result or right
             
             if op in ("uban","&&") and not result: 
-                print("here1")
+                #print("here1")
                 return False  # no need to evaluate right side
             if op in ("maskinUnsa","||") and result: 
-                print("here2")
+                #print("here2")
                 return True
             right = self.visit(terms[i])
+            ## COMMENT OUT THIS LINE IF WANNA CHANGE THE CONDITIONALS 
             if((result not in [False, True, 1, 0]) or right not in [False, True, 1, 0]):
                 raise ValueError(f"[Conditional Error] Conditionals can only take True or False. Got '{result}' and '{right}'")
             result = result and right if op in ("uban","&&") else result or right
