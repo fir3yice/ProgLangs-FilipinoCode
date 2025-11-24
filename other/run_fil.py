@@ -36,7 +36,7 @@ def print_tree(node, prefix="", is_last=True):
             print_tree(child, new_prefix, is_last_child)
 
 #filename repo
-# test0_scoping test1_iomath test3_if_else test4_for test4_while
+# test0_scoping test2_logic test1_iomath test3_if_else test4_for test4_while
 # test5_functions test6_use
 # test10_accounts
 
@@ -44,7 +44,7 @@ def print_tree(node, prefix="", is_last=True):
 
 # test_00.fil
 
-input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\test6_use.fil", encoding="utf-8")
+input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\test2_logic.fil", encoding="utf-8")
 lexer = FilipinoCodeLexer(input_stream)
 tokens = CommonTokenStream(lexer)
 parser = FilipinoCodeParser(tokens)

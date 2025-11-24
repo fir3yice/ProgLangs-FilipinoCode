@@ -1,0 +1,46 @@
+Error Handling (Lexical and Syntax)			Any / nonspecified
+Primitive Data Types and Variable Implementation	test1_iomath
+Type Checking					test1_iomath
+Runtime Memory Management (Scope and Address)	test0_scoping
+Arithmetic Expressions				test1_iomath
+Logical Expressions					test2_logic
+Assignment Statements				Any
+Conditional Statements				test3_if_else
+Iterative Statements				test4_for / test4_while
+Input/Output System				test1_iomath
+Subprograms/Subroutines				test5_functions / test6_use
+Collection Data Types / Abstract Data Types / OOP	test10_accounts
+Exception Handling					Any / nonspecified
+Auxilliary Features					debugger, optimization, test10_accounts
+
+
+yk that feeling when you type it in notepad and it's maayos then when you paste it to vscode it's not aligned at all...
+
+
+1. All types of syntax errors and lexical errors are handled by the interpreter system. The error messages are sufficient to debug the errors.
+
+2. Variables of the basic data types (Boolean, int, string, float) are supported in the system. Variables are allocated and bound properly to a name and "address (in the symbol table)" .
+
+3. Operations and assignment statements check data types properly. The interpreter system throws appropriate semantic errors when unsupported operations are encountered. Coercion is properly handled or implemented.
+
+4. Variables are only available in their appropriate scopes. Scoping (static or dynamic) works properly/as intended.
+
+5. The interpreter can execute all types of arithmetic expressions properly. Precedence and associativity are well-respected, as well as any potential coercion.
+
+6. The interpreter can evaluate all types of Boolean/relational expressions. Precedence is well-respected, as well as any potential coercion.
+
+7. Type and value binding is properly updated upon execution of all types of assignment statements. If supported, mixed-mode assignment is properly implemented.
+
+8. The interpreter is sufficiently able to handle branching logic. The language is able to handle complex decision tree structures (regardless of readability/writability).
+
+9. The interpreter is able to handle iterative logic. The language is able to handle all necessary loop variants (count-controlled, logic-controlled, user-controlled; disregard types excluded as a language design decision).
+
+10. The language can sufficiently interact with the user by receiving input from the terminal/console/standard input/an input file and by printing strings to the terminal/console/standard output/an output file.
+
+11. The language supports the declaration of subroutines. Control is properly passed between subroutines during runtime. Recursive functions work properly in the context of the language.
+
+12. Any special abstract data types/collection types will be graded here. (Eg, collection data types, OOP, etc)
+
+13. Code blocks/control structures/subroutines can throw exceptions, and the language has mechanisms to handle these exceptions.
+
+14. Any additional features.

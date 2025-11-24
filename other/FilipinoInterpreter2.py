@@ -196,10 +196,10 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             #     result = result or right
             
             if op in ("uban","&&") and not result: 
-                #print("here1")
+                print("short circuit AND") #DEMO
                 return False  # no need to evaluate right side
             if op in ("maskinUnsa","||") and result: 
-                #print("here2")
+                print("short circuit OR") #DEMO
                 return True
             right = self.visit(terms[i])
             ## COMMENT OUT THIS LINE IF WANNA CHANGE THE CONDITIONALS 
@@ -266,6 +266,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         return result
 
     def visitArith_factor(self, ctx: FilipinoCodeParser.Arith_factorContext):
+        #print("here")
         if ctx.getChildCount() == 2:
             #print("hhh")
             op = ctx.getChild(0).getText()
@@ -323,6 +324,8 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
                 print(f"[Runtime Error] Variable '{name}' not defined.")
                 return 0
             return symbol.value
+        else:
+            print(f"[Syntax Error] Unknown '{name}'. Maybe you did not define it?")
         return 0
 
     # Value Literals 
@@ -357,8 +360,8 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         user_input = input(f"[Input] {var_name} ➜ ")
 
         value = user_input
-        if user_input.lower() in ["meron", "alaws"]:
-            value = user_input.lower() == "meron" #TODO: not actually tested
+        if user_input.lower() in ["Totoo", "Mali"]:
+            value = user_input.lower() == "Totoo" #TODO: not actually tested
         else:
             try:
                 if "." in user_input:
@@ -408,7 +411,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         if(self.verbose):
             print(f"[Debug] Entering a conditional block")
         main_condition = self.visit(ctx.expression(0))
-        print(main_condition)
+        #print(main_condition)
         if main_condition:
             self.visit(ctx.block(0))
             return None

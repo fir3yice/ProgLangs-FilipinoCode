@@ -1,0 +1,33 @@
+buhat main() {
+
+    lods bilang x;
+    x etoNaLods 0;
+    lods bulyan totoo_bool, mali_bool;
+    totoo_bool etoNaLods Totoo;
+    mali_bool etoNaLods Mali;
+    yawit "Totoo bool:", totoo_bool, ". Mali bool:", mali_bool;
+
+    lods bilang score;
+    score etoNaLods 99;
+    ediwow(score masDako 10 maskinUnsa mali_bool){
+        yawit "truth!";
+    }
+    ediwow(totoo_bool uban mali_bool){          // True AND False
+        yawit "yes2!";
+    }
+    ediwow(totoo_bool maskinUnsa mali_bool){    // True OR False
+        yawit "yes3!";
+    }
+    ediwow(mali_bool uban  totoo_bool){         // False AND True
+        yawit "yes2_1!";
+    }
+    ediwow( mali_bool maskinUnsa  totoo_bool){  // True OR False
+        yawit "yes3_1!";
+    }
+    ediwow(totoo_bool uban totoo_bool){         // True AND True
+        yawit "yes4!";
+    }
+    ediwow(mali_bool maskinUnsa mali_bool){     //  False OR False
+        yawit "yes5!";
+    }
+}
