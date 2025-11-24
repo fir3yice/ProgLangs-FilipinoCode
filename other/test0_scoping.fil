@@ -1,15 +1,34 @@
-forever bilang constantSample etoNaLods -11;
+forever bilang constantSample etoNaLods 100.1;
 buhat main() {
+    yawit "Basic Scoping Test";
 
+    yawit "constant:", constantSample;
+    
     lods bilang x;
-    x etoNaLods 0;
-    lods bulyan test_bool;
-    test_bool etoNaLods Totoo;
-    yawit test_bool;
+    x etoNaLods 10;
+    lods bilang y;
+    y etoNaLods 20;
 
-    lods bilang score;
-    score etoNaLods 99;
-    ediwow(score masDako 10 uban test_bool){
-        yawit "truth!";
+    yawit "x Before block:", x;
+    yawit "y Before block:", y;
+
+    {
+        lods bilang x;
+        x etoNaLods 99;
+        yawit "x Inside block:", x;
+        yawit "y Inside same block:", y;
+
+        {
+            lods bilang x;
+            x etoNaLods 100;
+            yawit "x Inside the next block:", x;
+        }
+        {
+            lods bilang x;
+            x etoNaLods 1001;
+            yawit "x Inside the next block 2:", x;
+        }
     }
+
+    yawit "After block:", x;
 }

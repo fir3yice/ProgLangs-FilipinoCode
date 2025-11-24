@@ -11,8 +11,8 @@ class VerboseErrorListener(ErrorListener):
         self.errors = []
 
     def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
-        if "missing \';\' at" in msg:
-            print("lol")
+        #if "missing \';\' at" in msg:
+            #print("")
         error_msg = f"[Syntax Error] line {line}:{column} -> {msg}"
         self.errors.append(error_msg)
         print(error_msg)
@@ -44,7 +44,7 @@ def print_tree(node, prefix="", is_last=True):
 
 # test_00.fil
 
-input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\test3_if_else.fil", encoding="utf-8")
+input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\test6_use.fil", encoding="utf-8")
 lexer = FilipinoCodeLexer(input_stream)
 tokens = CommonTokenStream(lexer)
 parser = FilipinoCodeParser(tokens)
@@ -53,7 +53,7 @@ listener = VerboseErrorListener()
 parser.addErrorListener(listener)
 tree = parser.program()
 
-print_tree(tree)
+#print_tree(tree)
 
 interpreter = FilipinoInterpreter(verbose=False)
 try:

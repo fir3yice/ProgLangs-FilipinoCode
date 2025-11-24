@@ -96,7 +96,7 @@ arith_term
     ;
 
 arith_factor
-    : IDENTIFIER (INCREMENT | DECREMENT)?
+    : IDENTIFIER
     | funccall
     | LPAREN expression RPAREN
     | value

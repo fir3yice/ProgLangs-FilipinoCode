@@ -1,3 +1,6 @@
+# python -u "d:\_GitRepos\ProgLangs\other\run_filipinocode.py"
+# cd other
+# python -u run_filipinocode.py
 import argparse
 from antlr4 import *
 from FilipinoCodeLexer import FilipinoCodeLexer

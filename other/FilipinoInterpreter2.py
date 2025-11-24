@@ -2,7 +2,7 @@ from FilipinoCodeVisitor import FilipinoCodeVisitor
 from FilipinoCodeParser import FilipinoCodeParser
 from symbol_table import SymbolTable
 from account import Account
-
+from antlr4.error.ErrorListener import ErrorListener
 
 
 ## TODO: negative numbers (hopefully fixed, maybe fix if there's a space so like - <value> vs -<value>)
@@ -41,7 +41,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         self.functions = {}
         self.imported_modules = {}
         self.verbose = verbose
-        print("verbose is:", self.verbose)
+        #print("verbose is:", self.verbose)
     
     
     def default_value_for_type(self, dtype):
@@ -605,6 +605,7 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
     def visitUse_statement(self, ctx):
         file_name = ctx.IDENTIFIER(0).getText()
         symbol_name = ctx.IDENTIFIER(1).getText()
+        #print(file_name, symbol_name)
 
         #read and parse the file contents and convert to part of the parse tree
         #run through those parts of the parse tree and put it into the respective scopes before proceeding with the rest
@@ -616,17 +617,17 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             self.imported_modules[file_name] = set()
         self.imported_modules[file_name].add(symbol_name)
 
-        print("Looking for ", file_name, symbol_name)
+        #print("Looking for ", file_name, symbol_name)
 
         # TODO: Probably change the logic to just use the entire file since the parser goes through everything anyway
 
-        module_file = f"{file_name}.fil"  
+        module_file = f"{file_name}.{symbol_name}"  
         try:
-            module_file = r"D:\_GitRepos\ProgLangs\other\\" + module_file
+            #module_file = r"D:\_GitRepos\ProgLangs\other\\" + module_file
             with open(module_file, "r") as f:
                 source = f.read()
         except FileNotFoundError:
-            raise FileNotFoundError(f"[Use Error] Module '{module_file}' not found. Perhaps the module is not a \'.fil\' file?")
+            raise FileNotFoundError(f"[Use Error] Module '{module_file}' not found. Perhaps the module is not a \'.fil\' file or is in the wrong dir.")
 
         from antlr4 import InputStream, CommonTokenStream
         from FilipinoCodeLexer import FilipinoCodeLexer
@@ -636,6 +637,10 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
         lexer = FilipinoCodeLexer(input_stream)
         tokens = CommonTokenStream(lexer)
         parser = FilipinoCodeParser(tokens)
+        parser.removeErrorListeners()
+        listener = VerboseErrorListener()
+        parser.addErrorListener(listener)
+
         tree = parser.module()
         if(self.verbose):
             #print(f"Function '{name}' done") 
@@ -721,3 +726,15 @@ class FuncDef():
         self.return_type = return_type
         self.ctx = ctx       
         self._local_cache = {}
+
+class VerboseErrorListener(ErrorListener):
+    def __init__(self):
+        super().__init__()
+        self.errors = []
+
+    def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
+        #if "missing \';\' at" in msg:
+            #print("")
+        error_msg = f"[Syntax Error] in a use file at line {line}:{column} -> {msg}"
+        self.errors.append(error_msg)
+        print(error_msg)
