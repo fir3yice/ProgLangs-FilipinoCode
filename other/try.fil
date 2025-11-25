@@ -4,16 +4,12 @@ buhat main(){
         yawit "Try Catch Test";
         
         lods bilang x;
+        lods bilang y;
         x etoNaLods 10;
-        yawit x hati 0;
+        ngutana y;
+        yawit "Did it work?", x hati y;
         
-        yawit "Did it work?";
-
     } huli (e) {
-        // This block should be EXECUTED
-        pakita("  [HULI] Exception caught successfully!");
-        pakita("  [HULI] The exception variable (e) value is: "); pakita(e);
+        yawit "May mali pre!", e;
     }
-
-    pakita("--- TEST FINISHED (Execution should continue here) ---");
 }

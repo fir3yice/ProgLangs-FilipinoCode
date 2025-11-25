@@ -53,6 +53,15 @@ class FilipinoCodeListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by FilipinoCodeParser#try_catch_statement.
+    def enterTry_catch_statement(self, ctx:FilipinoCodeParser.Try_catch_statementContext):
+        pass
+
+    # Exit a parse tree produced by FilipinoCodeParser#try_catch_statement.
+    def exitTry_catch_statement(self, ctx:FilipinoCodeParser.Try_catch_statementContext):
+        pass
+
+
     # Enter a parse tree produced by FilipinoCodeParser#deposit_statement.
     def enterDeposit_statement(self, ctx:FilipinoCodeParser.Deposit_statementContext):
         pass

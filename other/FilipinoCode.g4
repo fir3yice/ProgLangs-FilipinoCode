@@ -23,6 +23,7 @@ statement
     | if_statement
     | while_statement
     | for_statement
+    | try_catch_statement
     | return_statement SEMICOLON
     | block
     | break_statement
@@ -35,6 +36,10 @@ statement
     | show_balance_statement SEMICOLON
     | transfer_statement SEMICOLON
     | interest_statement SEMICOLON
+    ;
+
+try_catch_statement
+    : SUBOK block HULI LPAREN IDENTIFIER RPAREN block
     ;
 
 deposit_statement
@@ -227,6 +232,10 @@ BREAK           : 'charot';
 CONTINUE        : 'padayon';
 CONST           : 'forever';
 USE             : 'use'; 
+
+// New Keywords for Exception Handling
+SUBOK           : 'subok'; 
+HULI            : 'huli'; 
 
 // Finance Keywords
 DEPOSIT         : 'deposit';

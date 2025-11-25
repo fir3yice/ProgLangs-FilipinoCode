@@ -34,6 +34,11 @@ class FilipinoCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by FilipinoCodeParser#try_catch_statement.
+    def visitTry_catch_statement(self, ctx:FilipinoCodeParser.Try_catch_statementContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by FilipinoCodeParser#deposit_statement.
     def visitDeposit_statement(self, ctx:FilipinoCodeParser.Deposit_statementContext):
         return self.visitChildren(ctx)

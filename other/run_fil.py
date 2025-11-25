@@ -40,12 +40,13 @@ def print_tree(node, prefix="", is_last=True):
 # test5_functions test6_use
 # test7_errors
 # test10_accounts
+# try.fil
 
 # sample1_basic sample2_medium sample3_complex
 
 # test_00.fil
 
-input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other\test1_iomath.fil", encoding="utf-8")
+input_stream = FileStream(r"D:\_GitRepos\ProgLangs\other - Copy\try.fil", encoding="utf-8")
 lexer = FilipinoCodeLexer(input_stream)
 tokens = CommonTokenStream(lexer)
 parser = FilipinoCodeParser(tokens)
@@ -54,7 +55,7 @@ listener = VerboseErrorListener()
 parser.addErrorListener(listener)
 tree = parser.program()
 
-#print_tree(tree)
+print_tree(tree)
 
 interpreter = FilipinoInterpreter(verbose=False)
 try:

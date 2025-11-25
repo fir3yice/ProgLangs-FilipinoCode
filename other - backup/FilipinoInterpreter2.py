@@ -179,31 +179,6 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
 
     def visitExpression(self, ctx: FilipinoCodeParser.ExpressionContext):
         return self.visit(ctx.bool_expr())
-    
-
-    def visitTry_catch_statement(self, ctx):
-        try_block_ctx = ctx.block(0)
-        catch_block_ctx = ctx.block(1)
-
-        exception_var_name = ctx.IDENTIFIER().getText()
-
-        try:
-            self.visit(try_block_ctx)
-
-        except Exception as e:
-            
-            original_scope = self.global_scope
-            self.global_scope = SymbolTable(original_scope) 
-
-            try:
-                self.global_scope.define(exception_var_name, Exception, e, False)
-
-                self.visit(catch_block_ctx)
-                
-            finally:
-                self.global_scope = original_scope
-        
-        return None
 
     # Boolean Expressions 
     def visitBool_expr(self, ctx: FilipinoCodeParser.Bool_exprContext):
