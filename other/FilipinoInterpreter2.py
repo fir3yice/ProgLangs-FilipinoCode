@@ -260,6 +260,8 @@ class FilipinoInterpreter(FilipinoCodeVisitor):
             if op == "dobolDobol":
                 result *= right
             elif op == "hati":
+                if(right == 0):
+                    raise ValueError("[Value Error] Division by Zero")
                 result /= right
             elif op == "sobra":
                 result %= right

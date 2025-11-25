@@ -1,8 +1,11 @@
 forever bilang constantSample etoNaLods 100.1;
+forever dobols PI etoNaLods 3.14;
 buhat main() {
     yawit "Basic Scoping Test";
 
-    yawit "constant:", constantSample;
+    yawit "constant 1:", constantSample;
+    yawit "constant 2:", PI;
+    PI etoNaLods 22.7;
     
     lods bilang x;
     x etoNaLods 10;
