@@ -22,11 +22,12 @@ buhat main() {
     yawit "Math Test";
 
     age etoNaLods 10;
-    yawit age dagdag 20;
-    yawit age bawas 20;
-    yawit age dobolDobol 2;
-    yawit age hati 2;
-    yawit age sobra 7;
+    height etoNaLods 2.0;
+    yawit age dagdag 20;    // 10 + 20 = 30
+    yawit age bawas 20;     // 10 - 20 = -10
+    yawit age dobolDobol 2; // 10 * 2 = 20
+    yawit age hati 2;       // 10 / 2 = 5.0     //dividing by 0 will stop the program at runtime
+    yawit age sobra 7;      // 10 % 7 = 3
 
     yawit age dagdag 15 dobolDobol 2 hati 3 dagdag 2;
     //10 + 15 * 2 / 3 + 2
@@ -34,7 +35,12 @@ buhat main() {
     //10 + 10 + 2 = 22.0
 
     yawit age dagdag 20 hati 2 dobolDobol 2 dagdag 3;
-    //10 + 20 / 2 * 2 + 3
+    //10 + 20 / 2 * 2 + 3 = 33.0
 
-    
+    age etoNaLods age dagdag height dobolDobol age hati 4 dagdag 2 bawas (age hati 2);
+    //age =     10      +       2       *       10 /    4   +    2  -   ( 10   /   2 )
+    //age =     10 + 20 / 4 + 2 - 5
+    //age =     10 + 5 + 2 - 5
+    //age =     12?
+    yawit "New Age value:", age;
 }

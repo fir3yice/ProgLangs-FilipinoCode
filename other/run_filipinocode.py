@@ -92,21 +92,21 @@ def main():
         print(f"[Runtime Error] {e}")
         return
 
-    if args.interactive:
-        print("\n[Interactive Mode] Type commands or 'exit' to quit.")
-        while True:
-            try:
-                line = input(">>> ")
-                if line.strip().lower() == "exit":
-                    break
-                input_stream = InputStream(line)
-                lexer = FilipinoCodeLexer(input_stream)
-                tokens = CommonTokenStream(lexer)
-                parser_obj = FilipinoCodeParser(tokens)
-                tree = parser_obj.program()
-                interpreter.visit(tree)
-            except Exception as e:
-                print(f"[Error] {e}")
+    # if args.interactive:
+    #     print("\n[Interactive Mode] Type commands or 'exit' to quit.")
+    #     while True:
+    #         try:
+    #             line = input(">>> ")
+    #             if line.strip().lower() == "exit":
+    #                 break
+    #             input_stream = InputStream(line)
+    #             lexer = FilipinoCodeLexer(input_stream)
+    #             tokens = CommonTokenStream(lexer)
+    #             parser_obj = FilipinoCodeParser(tokens)
+    #             tree = parser_obj.program()
+    #             interpreter.visit(tree)
+    #         except Exception as e:
+    #             print(f"[Error] {e}")
 
 if __name__ == "__main__":
     main()

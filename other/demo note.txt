@@ -1,17 +1,17 @@
-Error Handling (Lexical and Syntax)			Any / nonspecified
+Error Handling (Lexical and Syntax)			        Any / nonspecified
 Primitive Data Types and Variable Implementation	test1_iomath
-Type Checking					test1_iomath
-Runtime Memory Management (Scope and Address)	test0_scoping
-Arithmetic Expressions				test1_iomath
-Logical Expressions					test2_logic
-Assignment Statements				Any
-Conditional Statements				test3_if_else
-Iterative Statements				test4_for / test4_while
-Input/Output System				test1_iomath
-Subprograms/Subroutines				test5_functions / test6_use
+Type Checking					                    test1_iomath
+Runtime Memory Management (Scope and Address)	    test0_scoping
+Arithmetic Expressions				                test1_iomath
+Logical Expressions					                test2_logic
+Assignment Statements				                Any
+Conditional Statements				                test3_if_else
+Iterative Statements				                test4_for / test4_while
+Input/Output System				                    test1_iomath
+Subprograms/Subroutines				                test5_functions / test6_use
 Collection Data Types / Abstract Data Types / OOP	test10_accounts
-Exception Handling					Any / nonspecified
-Auxilliary Features					debugger, optimization, test10_accounts
+Exception Handling					                Any / nonspecified
+Auxilliary Features					                debugger, optimization, test10_accounts
 
 
 yk that feeling when you type it in notepad and it's maayos then when you paste it to vscode it's not aligned at all...

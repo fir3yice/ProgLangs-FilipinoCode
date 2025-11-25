@@ -1,0 +1,22 @@
+buhat add(bilang a, bilang b) : bilang {
+    uwianNa a dagdag b;
+}
+buhat main() {
+    lods bilang x   // Will still run because of the error recovery built in to antlr, and we did not touch that part. we just cutomize the error message.
+    x etoNaLods 0;
+
+    //yawit y;        // Will stop the program
+
+    y etoNaLods x;    // Will not stop the program
+
+    ngutana x;          // Expected int; will not stop the program
+    yawit "x is", x;
+
+    x etoNaLods add (1, 2.2);
+    yawit "x is", x;
+
+    lods bulyan totoo_bool, mali_bool;
+    totoo_bool etoNaLods Totoo;
+    mali_bool etoNaLods Mali;
+    yawit "Totoo bool:", totoo_bool, ". Mali bool:", mali_bool;
+}
