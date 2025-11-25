@@ -26,7 +26,7 @@ buhat main() {
     yawit age dagdag 20;    // 10 + 20 = 30
     yawit age bawas 20;     // 10 - 20 = -10
     yawit age dobolDobol 2; // 10 * 2 = 20
-    yawit age hati 0;       // 10 / 2 = 5.0     //dividing by 0 will stop the program at runtime
+    yawit age hati height;  // 10 / 2 = 5.0     //dividing by 0 will stop the program at runtime
     yawit age sobra 7;      // 10 % 7 = 3
 
     yawit age dagdag 15 dobolDobol 2 hati 3 dagdag 2;

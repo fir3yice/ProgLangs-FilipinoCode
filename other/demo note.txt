@@ -1,4 +1,4 @@
-Error Handling (Lexical and Syntax)			        Any / nonspecified
+Error Handling (Lexical and Syntax)			        (some examples) test7_errors
 Primitive Data Types and Variable Implementation	test1_iomath
 Type Checking					                    test1_iomath
 Runtime Memory Management (Scope and Address)	    test0_scoping

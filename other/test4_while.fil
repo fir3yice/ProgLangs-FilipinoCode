@@ -1,9 +1,9 @@
 buhat main() {
     yawit "Basic While Loop test";
     lods bilang x;
-    x etoNaLods 1;
+    x etoNaLods 0;
 
-    weh (x saktoGamay 5) {
+    weh (x saktoGamay 3) {
         yawit "x =", x;
         x etoNaLods x dagdag 1;
     }

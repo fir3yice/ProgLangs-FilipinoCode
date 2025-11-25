@@ -2,7 +2,7 @@ buhat main() {
     yawit "Basic For Loop Test";
     lods bilang i;
     yawit "basic test";
-    sakalam (i etoNaLods 0; i saktoGamay 5; i etoNaLods i dagdag 1) {
+    sakalam (i etoNaLods 0; i saktoGamay 3; i etoNaLods i dagdag 1) {
         yawit i;
     }
 
