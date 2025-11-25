@@ -1,6 +1,6 @@
 buhat divide() : dobols {
     subok {
-        yawit "Try Catch Test";
+        yawit "Try Catch Test in Fcuntion";
         
         lods bilang x;
         lods bilang y;

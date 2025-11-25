@@ -9,6 +9,6 @@ buhat main(){
     y etoNaLods 5;
     z etoNaLods 0;
 
-    z etoNaLods subtract(x, y);
+    z etoNaLods add(x, y);
     yawit z; 
 }

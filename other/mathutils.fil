@@ -7,7 +7,3 @@ buhat add(bilang a, bilang b) : bilang {
 buhat subtract(bilang a, bilang b) : bilang {
     uwianNa a bawas b;
 }
-
-buhat main(){
-    yawit "test";
-}

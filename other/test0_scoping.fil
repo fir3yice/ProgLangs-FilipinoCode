@@ -5,7 +5,7 @@ buhat main() {
 
     yawit "constant 1:", constantSample;
     yawit "constant 2:", PI;
-    PI etoNaLods 22.7;
+    //PI etoNaLods 22.7;
     
     lods bilang x;
     x etoNaLods 10;
