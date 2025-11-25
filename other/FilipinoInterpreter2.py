@@ -5,7 +5,6 @@ from account import Account
 from antlr4.error.ErrorListener import ErrorListener
 
 
-## TODO: negative numbers (hopefully fixed, maybe fix if there's a space so like - <value> vs -<value>)
 ## TODO: blank assignment or incorrect assignment (the first is a raised error, the second is a warning only -> error recovery)
 ## TODO: Final checking/edge case stuff
 

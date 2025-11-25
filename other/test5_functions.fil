@@ -35,7 +35,7 @@ buhat main() {
     newVal etoNaLods printAndReturn(7);
     yawit "printAndReturn(7) returned:", newVal;
 
-    // Test recursion — factorial
+    // Test recursion (factorial)
     lods bilang f5;
     f5 etoNaLods factorial(5);
     yawit "factorial(5) =", f5;

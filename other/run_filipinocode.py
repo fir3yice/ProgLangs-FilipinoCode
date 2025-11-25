@@ -85,6 +85,19 @@ def main():
     if args.print_tree:
         print_tree(tree)
 
+
+    # python -u run_filipinocode.py <filename> -dp -di -t or -h
+    #filename repo
+    # test0_scoping test2_logic test1_iomath test3_if_else test4_for test4_while
+    # test5_functions test6_use
+    # test7_errors
+    # test10_accounts
+    # try.fil
+
+    # sample1_basic sample2_medium sample3_complex
+
+    # test_00.fil
+
     interpreter = FilipinoInterpreter(args.debug_i)
     try:
         interpreter.visit(tree)

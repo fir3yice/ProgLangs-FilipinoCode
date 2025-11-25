@@ -1,4 +1,4 @@
-Error Handling (Lexical and Syntax)			        (some examples) test7_errors
+Error Handling (Lexical and Syntax)			        test7_errors
 Primitive Data Types and Variable Implementation	test1_iomath
 Type Checking					                    test1_iomath
 Runtime Memory Management (Scope and Address)	    test0_scoping
@@ -10,11 +10,12 @@ Iterative Statements				                test4_for / test4_while
 Input/Output System				                    test1_iomath
 Subprograms/Subroutines				                test5_functions / test6_use
 Collection Data Types / Abstract Data Types / OOP	test10_accounts
-Exception Handling					                Any / nonspecified
+Exception Handling					                try.fil
 Auxilliary Features					                debugger, optimization, test10_accounts
 
 
 yk that feeling when you type it in notepad and it's maayos then when you paste it to vscode it's not aligned at all...
+then when you align it in vscode it's not aligned in notepad anymore :DDDDDDDD
 
 
 1. All types of syntax errors and lexical errors are handled by the interpreter system. The error messages are sufficient to debug the errors.

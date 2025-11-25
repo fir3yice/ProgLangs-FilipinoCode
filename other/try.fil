@@ -1,5 +1,20 @@
+buhat divide() : dobols {
+    subok {
+        yawit "Try Catch Test";
+        
+        lods bilang x;
+        lods bilang y;
+        x etoNaLods 10;
+        ngutana y;
+        uwianNa x hati y;
+        
+    } huli (e) {
+        yawit "May mali pre!", e;
+    }
+
+}
+
 buhat main(){
-    lods bilang e;
     subok {
         yawit "Try Catch Test";
         
@@ -12,4 +27,6 @@ buhat main(){
     } huli (e) {
         yawit "May mali pre!", e;
     }
+    lods dobols result;
+    result etoNaLods divide();
 }
