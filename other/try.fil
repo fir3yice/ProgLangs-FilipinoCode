@@ -1,0 +1,19 @@
+buhat main(){
+    lods bilang e;
+    subok {
+        yawit "Try Catch Test";
+        
+        lods bilang x;
+        x etoNaLods 10;
+        yawit x hati 0;
+        
+        yawit "Did it work?";
+
+    } huli (e) {
+        // This block should be EXECUTED
+        pakita("  [HULI] Exception caught successfully!");
+        pakita("  [HULI] The exception variable (e) value is: "); pakita(e);
+    }
+
+    pakita("--- TEST FINISHED (Execution should continue here) ---");
+}

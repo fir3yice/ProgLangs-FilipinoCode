@@ -1,0 +1,23 @@
+buhat main() {
+    yawit "Basic test";
+    //lods aaa test;
+    lods bilang age;
+    lods dobols height;
+    lods tsismis name;
+    lods emoji initial;
+
+    age etoNaLods 10;
+    yawit age dagdag 20;
+    yawit age bawas 20;
+    yawit age dobolDobol 2;
+    yawit age hati 2;
+    yawit age sobra 7;
+
+    yawit age dagdag 15 dobolDobol 2 hati 3 dagdag 2;
+    //10 + 15 * 2 / 3 + 2
+    //10 + 30 / 3 + 2
+    //10 + 10 + 2 = 22.0
+
+    yawit age dagdag 20 hati 2 dobolDobol 2 dagdag 3;
+    //10 + 20 / 2 * 2 + 3
+}

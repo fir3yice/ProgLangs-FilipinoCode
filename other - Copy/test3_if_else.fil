@@ -1,0 +1,23 @@
+buhat main() {
+    yawit "Basic If else blocks test";
+    lods bilang score;
+    yawit "Enter your score:";
+    ngutana score;
+
+    ediwow (score saktoDako 90 dagdag 10 ) {
+        yawit "Excellent!";
+    } ediAno (score saktoDako 75) {
+        yawit "Good job!";
+    } ediAno (score saktoDako 55) {
+        yawit "Ok lang!";
+    }
+     edi {
+        yawit "Needs improvement!";
+    }
+
+    yawit score;
+
+    ediwow(score masDako 90 uban (90 masDako 1)){
+        yawit "here";
+    }
+}

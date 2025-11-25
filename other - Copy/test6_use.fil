@@ -1,0 +1,14 @@
+use mathutils.fil;
+
+buhat main(){
+
+    yawit "Imported. now in main file";
+
+    lods bilang x, y, z;
+    x etoNaLods 10;
+    y etoNaLods 5;
+    z etoNaLods 0;
+
+    z etoNaLods subtract(x, y);
+    yawit z; 
+}

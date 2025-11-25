@@ -1,0 +1,15 @@
+buhat main(){
+    lods bilang e;
+    subok {
+        yawit "Try Catch Test";
+        
+        lods bilang x;
+        lods bilang y;
+        x etoNaLods 10;
+        ngutana y;
+        yawit "Did it work?", x hati y;
+        
+    } huli (e) {
+        yawit "May mali pre!", e;
+    }
+}

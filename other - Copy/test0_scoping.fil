@@ -1,0 +1,37 @@
+forever bilang constantSample etoNaLods 100.1;
+forever dobols PI etoNaLods 3.14;
+buhat main() {
+    yawit "Basic Scoping Test";
+
+    yawit "constant 1:", constantSample;
+    yawit "constant 2:", PI;
+    PI etoNaLods 22.7;
+    
+    lods bilang x;
+    x etoNaLods 10;
+    lods bilang y;
+    y etoNaLods 20;
+
+    yawit "x Before block:", x;
+    yawit "y Before block:", y;
+
+    {
+        lods bilang x;
+        x etoNaLods 99;
+        yawit "x Inside block:", x;
+        yawit "y Inside same block:", y;
+
+        {
+            lods bilang x;
+            x etoNaLods 100;
+            yawit "x Inside the next block:", x;
+        }
+        {
+            lods bilang x;
+            x etoNaLods 1001;
+            yawit "x Inside the next block 2:", x;
+        }
+    }
+
+    yawit "After block:", x;
+}
