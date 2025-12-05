@@ -1,20 +1,20 @@
 This is our MP for the Theory of Programming Languages Class
 
-Created by Ong & Tan
+*Created by Ong & Tan*
 
-### HOW TO
+## HOW TO
 At its core, it is a simple interpreted language, using a mix of Filipino words as the primary Keywords. Debating whether to upload the docs or not. 
 
 Don't forget to install the Antlr library:
-`pip install antlr4-tools`
+```pip install antlr4-tools```.
 
 If you want to change the grammar, run:
-`antlr4 -Dlanguage=Python3 -visitor FilipinoCode.g4`
+```antlr4 -Dlanguage=Python3 -visitor FilipinoCode.g4```.
 This will regenerate all of Antlr's stuff. 
 
-If you want to change how the interpreter works, edit `FilipinoInterpreter2.py`. You can also edit the symbol table and the extra `accounts` class/datatype.
+If you want to change how the interpreter works, edit ```FilipinoInterpreter2.py```. You can also edit the symbol table and the extra `accounts` class/datatype.
 
-### Scoring
+## Scoring
 | #  | Feature                                                     | Score        | Notes                                                                                          |
 |----|-------------------------------------------------------------|--------------|------------------------------------------------------------------------------------------------|
 | 1  | Error Handling (Lexical and Syntax)                         | **5/5**      |                                                                                                |
@@ -36,7 +36,7 @@ If you want to change how the interpreter works, edit `FilipinoInterpreter2.py`.
 
 Looking back, I thought that we got bonus points for adding short circuiting in logicals/conditionals. I guess not? I swear I read it though.
 
-### Other notes: 
+## Other notes: 
 - The "kind" keyword basically adds an attribute to each node CONTEXT `ctx`, so that the interpreter does not have to traverse the full tree to check what kind of `ctx` it is.
 - Technically there's also some sort of memory chaching for functions, but I did not test it (nor did I demo it because I dont know how to show that it's faster. It works though).
 - Negative number assignment works. Don't forget to allow this. 
@@ -46,7 +46,7 @@ Looking back, I thought that we got bonus points for adding short circuiting in 
 - Make a test that does recursion already. So that there's no live coding of Fibonacci or whatever.
 - Technically, Python allows expression (AND/OR) expression, so putting numbers on either side (any number) will work. Java does not allow this. We chose to make it 0 and 1 only. 
 
-### Major(ish) Issues:
+## Major(ish) Issues:
 - Try Catch is buggy
 - No implementation of `++` and `--`
 - Does not implement complex data types
